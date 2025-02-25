@@ -12,7 +12,7 @@ public class CurrencyConversionTest {
         Double amount = 1.0;
         CurrencyConverter converter = new CurrencyConverter();
         InputStream JSONdata = Thread.currentThread().getContextClassLoader().getResourceAsStream("test.json");
-        Double result = converter.convert(base,target,JSONdata,amount);
+        Double result = converter.convert(target,JSONdata,amount);
         Assertions.assertEquals(1.047916,result);
     }
     @Test
@@ -22,7 +22,7 @@ public class CurrencyConversionTest {
         Double amount = 20.0;
         CurrencyConverter converter = new CurrencyConverter();
         InputStream JSONdata = Thread.currentThread().getContextClassLoader().getResourceAsStream("test.json");
-        Double result = converter.convert(base,target,JSONdata,amount);
+        Double result = converter.convert(target,JSONdata,amount);
         Assertions.assertEquals(20.95832,result);
     }
 }
