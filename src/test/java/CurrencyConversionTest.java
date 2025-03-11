@@ -1,3 +1,5 @@
+import com.jayway.jsonpath.internal.JsonFormatter;
+import net.minidev.json.JSONArray;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -10,8 +12,10 @@ public class CurrencyConversionTest {
         String base = "EUR";
         String target = "USD";
         Double amount = 1.0;
+
         CurrencyConverter converter = new CurrencyConverter();
         InputStream JSONdata = Thread.currentThread().getContextClassLoader().getResourceAsStream("test.json");
+
         Double result = converter.convert(target,JSONdata,amount);
         Assertions.assertEquals(1.047916,result);
     }
@@ -20,8 +24,10 @@ public class CurrencyConversionTest {
         String base = "EUR";
         String target = "USD";
         Double amount = 20.0;
+
         CurrencyConverter converter = new CurrencyConverter();
         InputStream JSONdata = Thread.currentThread().getContextClassLoader().getResourceAsStream("test.json");
+
         Double result = converter.convert(target,JSONdata,amount);
         Assertions.assertEquals(20.95832,result);
     }

@@ -17,4 +17,10 @@ public class APIConnection extends JSONDataGetter{
 
         return connection;
     }
+
+    public static String getUrlAsStr(String base){
+        String encodedUrlString = "http://api.exchangeratesapi.io/v1/latest?access_key=" + URLEncoder.encode(APIKey) + URLEncoder.encode(base) + "&format=1";
+        return encodedUrlString;
+    }
+
 }

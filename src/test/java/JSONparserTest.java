@@ -11,7 +11,7 @@ public class JSONparserTest {
         String base = "EUR";
         String target = "USD";
         InputStream JSONdata = Thread.currentThread().getContextClassLoader().getResourceAsStream("test.json");
-        Double result = parser.parse(base,target,JSONdata);
+        Double result = parser.parse(target,JSONdata);
         Assertions.assertEquals(1.047916,result);
     }
 }

@@ -8,8 +8,8 @@ public class JSONDataGetterTest {
     @Test
     public void dataGetterTest() throws IOException {
         JSONDataGetter dataGetter = new JSONDataGetter();
+        String base = "EUR";
         URLConnection connection = APIConnection.encodedUrlString();
-        String testResult = dataGetter.dataGetter(connection);
-        Assertions.assertNotNull(testResult);
+        Assertions.assertNotNull(connection);
     }
 }

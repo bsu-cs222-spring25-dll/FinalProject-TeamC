@@ -7,6 +7,7 @@ import java.net.URLConnection;
 public class APIConnectionTest {
     @Test
     public void encodedUrlTest() throws IOException {
+        String base = "EUR";
         URLConnection connection = APIConnection.encodedUrlString();
         Assertions.assertNotNull(connection);
     }
