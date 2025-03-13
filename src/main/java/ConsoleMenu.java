@@ -11,21 +11,31 @@ public class ConsoleMenu {
     private final RatesParser ratesParser = new RatesParser();
     private final DecimalFormat decimalFormat = new DecimalFormat();
     private final CurrencyConverter converter = new CurrencyConverter();
+    Scanner scan = new Scanner(System.in);
+    boolean quit = false;
     public void runMenu() throws IOException {
         JSONDataGetter dataGetter = new JSONDataGetter();
         APIConnection apiConnection = new APIConnection();
         String data = dataGetter.dataGetter(apiConnection.encodedUrlString());
-        Scanner scan = new Scanner(System.in);
-        System.out.println("""
-                ***Welcome***
-                Select an option
-                1. See all rates
-                2. Convert money amount
-                3. Quit""");
-        int userInput = scan.nextInt();
+        while(!quit) {
+            System.out.println("""
+                    ***Welcome***
+                    Select an option
+                    1. See all rates
+                    2. Convert money amount
+                    3. Quit""");
+            int userInput = scan.nextInt();
+            choiceCase(data,userInput);
+            }
+        }
+
+
+
+    public void choiceCase(String data, int userInput) throws IOException {
         switch (userInput) {
             case 1:
                 System.out.println(data);
+                break;
             case 2:
                 System.out.println("Please enter your currencies using 3 digits, such as USD or EUR");
                 System.out.println("What currency would you like to Convert from?");
@@ -40,18 +50,15 @@ public class ConsoleMenu {
                 System.out.println("PLEASE ENTER AS AN A DOUBLE, SUCH AS 0.00");
                 float amount = scan.nextFloat();
 
-                List<Float> rateList = ratesParser.parseThroughRatesForCurrentExchangeRateList(currencyFrom, currencyTo );
+                List<Float> rateList = ratesParser.parseThroughRatesForCurrentExchangeRateList(currencyFrom, currencyTo);
                 float startingAmountFloat = Float.parseFloat(String.valueOf(amount));
                 decimalFormat.setMaximumFractionDigits(2);
                 System.out.println("Converting from " + currencyFrom + " to " + currencyTo + " with " + decimalFormat.format(startingAmountFloat) +
-                        " gives you " + decimalFormat.format(converter.convertUsingAmount(rateList, startingAmountFloat)) + " in " + currencyTo);
-
-
-
-
-
-
+                        " gives you " + decimalFormat.format(converter.convertUsingAmount(rateList, startingAmountFloat)) + " in " + currencyTo + "\n");
+                break;
+            case 3:
+                quit = true;
+                break;
         }
-
     }
 }
