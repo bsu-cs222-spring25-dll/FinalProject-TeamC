@@ -30,6 +30,7 @@ public void choiceCase(String data){
             break;
         case 3:
             quit = true;
+            break;
         }
 
 
