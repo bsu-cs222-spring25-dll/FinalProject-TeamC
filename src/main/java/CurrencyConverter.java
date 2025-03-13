@@ -2,6 +2,7 @@ import net.minidev.json.JSONArray;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 public class CurrencyConverter {
     public double convert(String target, InputStream JSONdata, Double amount) throws IOException {
@@ -10,4 +11,12 @@ public class CurrencyConverter {
         Double conversion  = amount * conversionValue;
         return conversion;
     }
+
+    public float convertUsingAmount(List<Float> rateList, float startingAmout) {
+        float exchangeRate = (rateList.get(1) / rateList.get(0));
+        float endingAmount = (startingAmout * exchangeRate);
+        String formattedAmount = String.format("%.2f", endingAmount);
+        return Float.parseFloat(formattedAmount);
+    }
+
 }
