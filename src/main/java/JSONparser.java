@@ -8,7 +8,6 @@ public class JSONparser {
     public double parse(String target, InputStream JSONdata) throws IOException {
         JSONArray value = JsonPath.read(JSONdata, "$.." + target);
         String conversionString = value.getFirst().toString();
-        Double conversionValue = Double.parseDouble(conversionString);
-        return conversionValue;
+        return Double.parseDouble(conversionString);
     }
 }

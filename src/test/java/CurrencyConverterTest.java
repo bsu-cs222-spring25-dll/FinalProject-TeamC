@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class CurrencyConversionTest {
+public class CurrencyConverterTest {
     @Test
     public void testConvert() throws IOException {
         String base = "EUR";

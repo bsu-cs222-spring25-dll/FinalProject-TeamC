@@ -1,5 +1,7 @@
 plugins {
-    id("java")
+    java
+    application
+    id("org.openjfx.javafxplugin") version "0.1.0"
 }
 
 group = "org.example"
@@ -16,6 +18,10 @@ dependencies {
     implementation("net.minidev:json-smart:2.5.0")
     implementation("org.slf4j:slf4j-nop:2.0.11")
 
+}
+javafx {
+    version = "23.0.2"
+    modules = listOf("javafx.controls", "javafx.fxml")
 }
 
 tasks.test {
