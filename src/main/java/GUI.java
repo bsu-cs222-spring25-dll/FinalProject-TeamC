@@ -20,3 +20,4 @@ public class GUI extends Application {
     Stage window;
     Scene promptStart, getUserInput;
     TextArea outputArea;
+}
