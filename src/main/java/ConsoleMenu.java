@@ -6,6 +6,7 @@ public class ConsoleMenu {
     private final RatesParser ratesParser = new RatesParser();
     private final DecimalFormat decimalFormat = new DecimalFormat();
     private final CurrencyConverter converter = new CurrencyConverter();
+    private final CallForRates ratesCaller = new CallForRates();
     public void runMenu() throws IOException {
         JSONDataGetter dataGetter = new JSONDataGetter();
         APIConnection apiConnection = new APIConnection();
@@ -20,7 +21,7 @@ public class ConsoleMenu {
         int userInput = scan.nextInt();
         switch (userInput) {
             case 1:
-                System.out.println(data);
+                System.out.println(ratesCaller.getRatesAndNames(data));
                 break;
             case 2:
                 System.out.println("Please enter your currencies using 3 letter abbreviation, such as USD or EUR");

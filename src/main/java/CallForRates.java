@@ -11,6 +11,17 @@ public class CallForRates {
         String allCurrentRates = getStringDataNoData();
         return JsonPath.read(allCurrentRates, "$.." + currency);
     }
+    public String getRatesAndNames(String currency) throws IOException {
+        String allCurrentRates = getStringDataNoData();
+        String rates = JsonPath.read(allCurrentRates, "$..rates").toString();
+        rates = rates.replace("{","");
+        rates = rates.replace("}","");
+        rates = rates.replace("[","");
+        rates = rates.replace("]","");
+        rates = rates.replace("\"","");
+        return rates.replace(",","\n");
+    }
+
 
     public String getStringDataNoData() throws IOException {
         URLConnection connection = APIConnection.encodedUrlString();
