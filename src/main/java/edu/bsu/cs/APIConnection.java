@@ -8,7 +8,7 @@ import java.net.URLEncoder;
 @SuppressWarnings("ALL")
 public class APIConnection extends JSONDataGetter{
     @Deprecated
-    static String APIKey = "91c58f29bd36a7471e286d9ef212bc6a";
+    static String APIKey = "5f28af3b4d2b55a6748b07832b8d66c4";
     static URL APIUrl;
     public static URLConnection encodedUrlString() throws IOException {
         String encodedUrlString = "http://api.exchangeratesapi.io/v1/latest?access_key=" + URLEncoder.encode(APIKey) + "&format=1";

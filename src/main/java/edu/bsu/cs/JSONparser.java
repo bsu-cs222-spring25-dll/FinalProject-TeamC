@@ -8,8 +8,8 @@ import java.io.InputStream;
 
 public class JSONparser {
     public double parse(String target, InputStream JSONdata) throws IOException {
-        JSONArray value = JsonPath.read(JSONdata, "$.." + target);
-        String conversionString = value.getFirst().toString();
+        JSONArray currencyExchangeRate = JsonPath.read(JSONdata, "$.." + target);
+        String conversionString = currencyExchangeRate.getFirst().toString();
         return Double.parseDouble(conversionString);
     }
 }

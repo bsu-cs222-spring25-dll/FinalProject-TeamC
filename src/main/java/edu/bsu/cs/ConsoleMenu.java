@@ -10,8 +10,8 @@ public class ConsoleMenu {
     private final CurrencyConverter converter = new CurrencyConverter();
     public void runMenu() throws IOException {
         JSONDataGetter dataGetter = new JSONDataGetter();
-        APIConnection apiConnection = new APIConnection();
-        String data = dataGetter.dataGetter(apiConnection.encodedUrlString());
+        //APIConnection apiConnection = new APIConnection();
+        String data = dataGetter.dataGetter(APIConnection.encodedUrlString());
         Scanner scan = new Scanner(System.in);
         System.out.println("""
                 ***Welcome***
