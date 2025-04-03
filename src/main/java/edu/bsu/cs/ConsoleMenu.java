@@ -1,3 +1,5 @@
+package edu.bsu.cs;
+
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -21,7 +23,7 @@ public class ConsoleMenu {
         int userInput = scan.nextInt();
         switch (userInput) {
             case 1:
-                System.out.println(ratesCaller.getRatesAndNames(data));
+                System.out.println(ratesCaller.getRatesAndNames());
                 break;
             case 2:
                 System.out.println("Please enter your currencies using 3 letter abbreviation, such as USD or EUR");

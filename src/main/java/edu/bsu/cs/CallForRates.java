@@ -1,3 +1,5 @@
+package edu.bsu.cs;
+
 import com.jayway.jsonpath.JsonPath;
 import net.minidev.json.JSONArray;
 
@@ -11,7 +13,7 @@ public class CallForRates {
         String allCurrentRates = getStringDataNoData();
         return JsonPath.read(allCurrentRates, "$.." + currency);
     }
-    public String getRatesAndNames(String currency) throws IOException {
+    public String getRatesAndNames() throws IOException {
         String allCurrentRates = getStringDataNoData();
         String rates = JsonPath.read(allCurrentRates, "$..rates").toString();
         rates = rates.replace("{","");

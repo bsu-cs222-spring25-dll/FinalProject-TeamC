@@ -1,3 +1,5 @@
+package edu.bsu.cs;
+
 import com.jayway.jsonpath.JsonPath;
 import net.minidev.json.JSONArray;
 

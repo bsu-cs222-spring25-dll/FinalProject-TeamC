@@ -1,3 +1,5 @@
+package edu.bsu.cs;
+
 public class Currency {
     private double rate;
     private String name;
@@ -9,7 +11,7 @@ public class Currency {
 
     @Override
     public String toString() {
-        return "Currency{" +
+        return "edu.bsu.cs.Currency{" +
                 "rate=" + rate +
                 ", name='" + name + '\'' +
                 '}';
