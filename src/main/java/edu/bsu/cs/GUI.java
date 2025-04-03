@@ -23,7 +23,7 @@ public class GUI extends Application {
     private final RatesParser ratesParser = new RatesParser();
     private final DecimalFormat decimalFormat = new DecimalFormat();
     private final CurrencyConverter converter = new CurrencyConverter();
-    private final JSONDataGetter dataGetter = new JSONDataGetter();
+    //private final JSONDataGetter dataGetter = new JSONDataGetter();
 
 
     private final Color PRIMARYECOLOR = Color.web("#3498db");
@@ -64,7 +64,7 @@ public class GUI extends Application {
         startButton.setMinWidth(250);
         startButton.setMinHeight(60);
         startButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-        startButton.setOnAction(E -> {
+        startButton.setOnAction(_ -> {
             if (mainMenu == null) {
                 mainMenu = createMainMenuScene();
             }
@@ -72,7 +72,7 @@ public class GUI extends Application {
         });
 
 
-        Label versionLabel = new Label("Version 0.2.1");
+        Label versionLabel = new Label("Version 0.2.4");
         versionLabel.setFont(Font.font("Arial", 12));
         versionLabel.setTextFill(Color.web("#7f8c8d"));
 
@@ -113,9 +113,9 @@ public class GUI extends Application {
         Button convertCurrencyBtn = createStyledButton("Convert Currency", SECONDARYECOLOR);
         Button quitBtn = createStyledButton("Quit", Color.web("#95a5a6"));
 
-        displayRatesBtn.setOnAction(E -> window.setScene(createDisplayRatesScene()));
-        convertCurrencyBtn.setOnAction(E -> window.setScene(createConvertCurrencyScene()));
-        quitBtn.setOnAction(E -> window.close());
+        displayRatesBtn.setOnAction(_ -> window.setScene(createDisplayRatesScene()));
+        convertCurrencyBtn.setOnAction(_ -> window.setScene(createConvertCurrencyScene()));
+        quitBtn.setOnAction(_ -> window.close());
 
         VBox mainMenuLayout = new VBox(30);
         mainMenuLayout.setPadding(new Insets(40));
@@ -134,12 +134,12 @@ public class GUI extends Application {
                 "-fx-padding: 10 20; " +
                 "-fx-background-radius: 5;");
         button.setMinWidth(200);
-        button.setOnMouseEntered(E -> button.setStyle("-fx-background-color: " + toHex(color.darker()) + "; " +
+        button.setOnMouseEntered(_ -> button.setStyle("-fx-background-color: " + toHex(color.darker()) + "; " +
                 "-fx-text-fill: white; " +
                 "-fx-font-weight: bold; " +
                 "-fx-padding: 10 20; " +
                 "-fx-background-radius: 5;"));
-        button.setOnMouseExited(E -> button.setStyle("-fx-background-color: " + toHex(color) + "; " +
+        button.setOnMouseExited(_ -> button.setStyle("-fx-background-color: " + toHex(color) + "; " +
                 "-fx-text-fill: white; " +
                 "-fx-font-weight: bold; " +
                 "-fx-padding: 10 20; " +
@@ -165,6 +165,12 @@ public class GUI extends Application {
             outputArea.setStyle("-fx-control-inner-background: #ecf0f1;");
 
             Button backBtn = createStyledButton("Back to Main Menu", Color.web("#95a5a6"));
+            backBtn.setOnAction(_ -> {
+                if (mainMenu == null) {
+                    mainMenu = createMainMenuScene();
+                }
+                window.setScene(mainMenu);
+            });
 
             ScrollPane scrollPane = new ScrollPane(outputArea);
             scrollPane.setFitToWidth(true);
@@ -232,9 +238,9 @@ public class GUI extends Application {
         Button backButton = createStyledButton("Back to Main Menu", Color.web("#95a5a6"));
         GridPane.setConstraints(backButton, 0, 6, 2, 1);
         GridPane.setMargin(backButton, new Insets(20, 0, 0, 0));
-        backButton.setOnAction(E -> window.setScene(mainMenu));
+        backButton.setOnAction(_ -> window.setScene(mainMenu));
 
-        convertButton.setOnAction(E -> {
+        convertButton.setOnAction(_ -> {
             try {
                 String currencyFrom = fromField.getText().toUpperCase();
                 String currencyTo = toField.getText().toUpperCase();
