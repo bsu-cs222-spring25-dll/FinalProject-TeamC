@@ -1,5 +1,4 @@
-import com.jayway.jsonpath.internal.JsonFormatter;
-import net.minidev.json.JSONArray;
+import edu.bsu.cs.CurrencyConverter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

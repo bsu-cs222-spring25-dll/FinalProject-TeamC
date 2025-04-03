@@ -1,3 +1,5 @@
+import edu.bsu.cs.APIConnection;
+import edu.bsu.cs.JSONDataGetter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
