@@ -1,4 +1,5 @@
-import edu.bsu.cs.JSONparser;
+package edu.bsu.cs;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

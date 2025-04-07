@@ -1,3 +1,5 @@
+package edu.bsu.cs;
+
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
