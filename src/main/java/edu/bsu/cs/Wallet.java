@@ -25,8 +25,5 @@ public class Wallet {
         }
         return null;
     }
-    // Returns the list of all Customers
-    public ArrayList<Customer> getAllCustomers() {
-        return customerArrayList;
-    }
+
 }
