@@ -2,11 +2,13 @@ package edu.bsu.cs;
 
 public class Account {
     private double balance ;
+    private String accountCurrencyType;
     private String accountNumber;
     private static int numOfAccounts = 1000;
 
-    public Account(double initialDeposit) {
+    public Account(double initialDeposit, String accountCurrencyType) {
         this.balance = initialDeposit;
+        this.accountCurrencyType = accountCurrencyType;
         this.accountNumber = "" + numOfAccounts;
         numOfAccounts++;
     }
