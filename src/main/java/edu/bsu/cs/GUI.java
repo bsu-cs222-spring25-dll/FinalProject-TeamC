@@ -23,14 +23,13 @@ public class GUI extends Application {
     private final RatesParser ratesParser = new RatesParser();
     private final DecimalFormat decimalFormat = new DecimalFormat();
     private final CurrencyConverter converter = new CurrencyConverter();
-    //private final JSONDataGetter dataGetter = new JSONDataGetter();
+
 
 
     private final Color PRIMARYECOLOR = Color.web("#3498db");
     private final Color SECONDARYECOLOR = Color.web("#2ecc71");
     private final Color BACKGROUNDECOLOR = Color.web("#f5f7fa");
     private final Color TEXTECOLOR = Color.web("#2c3e50");
-    //private final Color ERRORECOLOR = Color.web("#e74c3c");
     private final Color ACCENTECOLOR = Color.web("#9b59b6");
 
     @Override
