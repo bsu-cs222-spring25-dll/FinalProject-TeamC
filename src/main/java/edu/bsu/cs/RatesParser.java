@@ -20,4 +20,17 @@ public class RatesParser {
         rateList.add(endingRateFloat);
         return rateList;
     }
+    public List<String> parseAvailableCurrencies(String ratesData) {
+        List<String> currencies = new ArrayList<>();
+
+        String[] lines = ratesData.split("\n");
+        for (String line : lines) {
+            if (line.contains(":")) {
+                String currency = line.split(":")[0].trim();
+                currencies.add(currency);
+            }
+        }
+
+        return currencies;
+    }
 }

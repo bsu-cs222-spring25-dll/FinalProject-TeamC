@@ -1,6 +1,8 @@
 package edu.bsu.cs;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -15,6 +17,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GUI extends Application {
 
@@ -195,36 +198,41 @@ public class GUI extends Application {
         grid.setAlignment(Pos.CENTER);
         grid.setBackground(new Background(new BackgroundFill(BACKGROUNDECOLOR, CornerRadii.EMPTY, Insets.EMPTY)));
 
-
         Label titleLabel = new Label("Currency Conversion");
         titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         titleLabel.setTextFill(TEXTECOLOR);
         GridPane.setConstraints(titleLabel, 0, 0, 2, 1);
         GridPane.setMargin(titleLabel, new Insets(0, 0, 20, 0));
 
+        List<String> currencyList;
+        try {
+            CallForRates call = new CallForRates();
+            String data = call.getRatesAndNames();
+            currencyList = ratesParser.parseAvailableCurrencies(data);
+        } catch (IOException e) {
+            currencyList = List.of("USD", "EUR", "GBP", "JPY", "CAD", "AUD", "CNY", "INR", "MXN");
+            showAlert("Couldn't fetch latest currencies, using default list");
+        }
+
+        ComboBox<String> fromComboBox = createEditableCurrencyComboBox(currencyList);
+        ComboBox<String> toComboBox = createEditableCurrencyComboBox(currencyList);
 
         Label fromLabel = createStyledLabel("Convert from:");
         GridPane.setConstraints(fromLabel, 0, 1);
-        TextField fromField = createStyledTextField("e.g. USD");
-        GridPane.setConstraints(fromField, 1, 1);
-
+        GridPane.setConstraints(fromComboBox, 1, 1);
 
         Label toLabel = createStyledLabel("Convert to:");
         GridPane.setConstraints(toLabel, 0, 2);
-        TextField toField = createStyledTextField("e.g. EUR");
-        GridPane.setConstraints(toField, 1, 2);
-
+        GridPane.setConstraints(toComboBox, 1, 2);
 
         Label amountLabel = createStyledLabel("Amount:");
         GridPane.setConstraints(amountLabel, 0, 3);
-        TextField amountField = createStyledTextField("e.g. 100.00");
+        TextField amountField = createStyledTextField();
         GridPane.setConstraints(amountField, 1, 3);
-
 
         Button convertButton = createStyledButton("Convert", SECONDARYECOLOR);
         GridPane.setConstraints(convertButton, 1, 4);
         GridPane.setMargin(convertButton, new Insets(20, 0, 0, 0));
-
 
         Label resultLabel = new Label();
         resultLabel.setWrapText(true);
@@ -233,7 +241,6 @@ public class GUI extends Application {
         GridPane.setConstraints(resultLabel, 0, 5, 2, 1);
         GridPane.setMargin(resultLabel, new Insets(20, 0, 0, 0));
 
-
         Button backButton = createStyledButton("Back to Main Menu", Color.web("#95a5a6"));
         GridPane.setConstraints(backButton, 0, 6, 2, 1);
         GridPane.setMargin(backButton, new Insets(20, 0, 0, 0));
@@ -241,11 +248,18 @@ public class GUI extends Application {
 
         convertButton.setOnAction(_ -> {
             try {
-                String currencyFrom = fromField.getText().toUpperCase();
-                String currencyTo = toField.getText().toUpperCase();
+                String currencyFrom = fromComboBox.getValue();
+                String currencyTo = toComboBox.getValue();
                 float amount = Float.parseFloat(amountField.getText());
 
-                List<Float> rateList = ratesParser.parseThroughRatesForCurrentExchangeRateList(currencyFrom, currencyTo);
+                if (currencyFrom == null || currencyFrom.isEmpty() ||
+                        currencyTo == null || currencyTo.isEmpty()) {
+                    showAlert("Please select or enter both currencies");
+                    return;
+                }
+
+                List<Float> rateList = ratesParser.parseThroughRatesForCurrentExchangeRateList(
+                        currencyFrom.toUpperCase(), currencyTo.toUpperCase());
                 float startingAmountFloat = Float.parseFloat(String.valueOf(amount));
                 decimalFormat.setMaximumFractionDigits(2);
 
@@ -260,10 +274,45 @@ public class GUI extends Application {
             }
         });
 
-        grid.getChildren().addAll(titleLabel, fromLabel, fromField, toLabel, toField,
+        grid.getChildren().addAll(titleLabel, fromLabel, fromComboBox, toLabel, toComboBox,
                 amountLabel, amountField, convertButton, resultLabel, backButton);
 
         return new Scene(grid, 500, 500);
+    }
+
+    private ComboBox<String> createEditableCurrencyComboBox(List<String> currencies) {
+        ComboBox<String> comboBox = new ComboBox<>();
+        comboBox.setEditable(true);
+        comboBox.getItems().addAll(currencies);
+        comboBox.setPromptText("Select or type currency");
+        comboBox.setMaxWidth(200);
+        comboBox.setStyle("-fx-font-size: 14; -fx-background-radius: 5;");
+
+        ObservableList<String> originalItems = FXCollections.observableArrayList(currencies);
+
+        comboBox.getEditor().textProperty().addListener((_, _, newValue) -> {
+            if (newValue == null || newValue.isEmpty()) {
+                comboBox.getItems().setAll(originalItems);
+                comboBox.show();
+            } else {
+                List<String> filtered = originalItems.stream()
+                        .filter(c -> c.toUpperCase().startsWith(newValue.toUpperCase()))
+                        .collect(Collectors.toList());
+
+                comboBox.getItems().setAll(filtered);
+                comboBox.show();
+            }
+        });
+
+        comboBox.setOnHidden(_ -> comboBox.getItems().setAll(originalItems));
+
+        comboBox.getEditor().textProperty().addListener((_, _, newValue) -> {
+            if (!newValue.toUpperCase().equals(newValue)) {
+                comboBox.getEditor().setText(newValue.toUpperCase());
+            }
+        });
+
+        return comboBox;
     }
 
     private Label createStyledLabel(String text) {
@@ -273,9 +322,9 @@ public class GUI extends Application {
         return label;
     }
 
-    private TextField createStyledTextField(String prompt) {
+    private TextField createStyledTextField() {
         TextField textField = new TextField();
-        textField.setPromptText(prompt);
+        textField.setPromptText("e.g. 100.00");
         textField.setStyle("-fx-padding: 8; -fx-font-size: 14; -fx-background-radius: 5;");
         textField.setMaxWidth(200);
         return textField;
