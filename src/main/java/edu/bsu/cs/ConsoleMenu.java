@@ -9,6 +9,7 @@ public class ConsoleMenu {
     private final DecimalFormat decimalFormat = new DecimalFormat();
     private final CurrencyConverter converter = new CurrencyConverter();
     private final CallForRates ratesCaller = new CallForRates();
+    private  final static Scanner scan = new Scanner(System.in);
     public void runMenu() throws IOException {
         JSONDataGetter dataGetter = new JSONDataGetter();
         APIConnection apiConnection = new APIConnection();
@@ -19,7 +20,8 @@ public class ConsoleMenu {
                 Select an option
                 1. Display Exchange Rates
                 2. Convert into another Currency
-                3. Quit""");
+                3. Account Management
+                4. Quit""");
         int userInput = scan.nextInt();
         switch (userInput) {
             case 1:
@@ -46,6 +48,19 @@ public class ConsoleMenu {
                         " gives you " + decimalFormat.format(converter.convertUsingAmount(rateList, startingAmountFloat)) + " in " + currencyTo);
                 break;
 
+            case 3:
+                getMenu();
         }
+    }
+
+    public void getMenu() {
+        Wallet wallet = new Wallet();
+        System.out.print("******MENU******\n1) Access Account\n2) Open New Account\n3) Go Back\n>>");
+        int walletUserInput = scan.nextInt();
+        switch (walletUserInput) {
+            case 1:
+//                getCustomer();
+        }
+
     }
 }
