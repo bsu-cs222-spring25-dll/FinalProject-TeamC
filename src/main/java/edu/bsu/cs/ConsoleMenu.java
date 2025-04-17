@@ -1,5 +1,6 @@
 package edu.bsu.cs;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -11,7 +12,8 @@ class ConsoleMenu {
     private final CallForRates ratesCaller = new CallForRates();
     Scanner scan = new Scanner(System.in);
 
-    public void runMenu() {
+    public void runMenu() throws FileNotFoundException {
+        Customer.loadCustomers();
         System.out.println("""
                 ***Welcome***
                 Select an option

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 public class AccountTest {
     @Test
     public void accountDepositTest() {
-        Account testAccount = new Account(500, "EUR");
+        Account testAccount = new Account(500, "EUR", "0001");
         testAccount.deposit(500);
 
         Assertions.assertEquals(1000, testAccount.getBalance());
@@ -14,7 +14,7 @@ public class AccountTest {
 
     @Test
     public void accountWithdrawTest() {
-        Account testAccount = new Account(500, "EUR");
+        Account testAccount = new Account(500, "EUR", "0002");
         testAccount.withdraw(250);
 
         Assertions.assertEquals(250, testAccount.getBalance());

@@ -1,5 +1,6 @@
 package edu.bsu.cs;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -7,9 +8,9 @@ public class Wallet {
     static Scanner scan = new Scanner(System.in);
     private static ArrayList<Customer> customerArrayList = new ArrayList<>();
 
-    public Wallet() {
-        customerArrayList = new ArrayList<>();
-    }
+    //public Wallet() {
+    //    customerArrayList = new ArrayList<>();
+    //}
 
     public static void addCustomer(Customer customer) {
         customerArrayList.add(customer);
@@ -29,8 +30,9 @@ public class Wallet {
     }
 
     public static int getSizeOfCustomerList() {return customerArrayList.size();}
+    public static ArrayList<Customer> getCustomerArrayList(){return customerArrayList;}
 
-    public static void accessWallet() {
+    public static void accessWallet() throws FileNotFoundException {
         while (true) {
             System.out.println("\n--- Wallet Menu ---");
             System.out.println("1) Access Account");
@@ -54,7 +56,7 @@ public class Wallet {
             }
         }
     }
-    public static void accessAccount() {
+    public static void accessAccount() throws FileNotFoundException {
         System.out.print("Enter your PIN: ");
         String pin = scan.nextLine();
         Customer customer = Wallet.getCustomer(pin);
@@ -64,11 +66,13 @@ public class Wallet {
             return;
         }
 
+        System.out.println("WELCOME: " + customer.getFirstName() + " " + customer.getLastName());
+
         System.out.println("Your Accounts: ");
-        System.out.println(customer.getAllAccounts());
+        System.out.println(customer.getAllAccounts(customer));
         System.out.print("Enter the account number you want to access: ");
         String accountNumber = scan.nextLine();
-        Account account = customer.getAccount(accountNumber);
+        Account account = customer.getAccount(accountNumber, customer);
 
         if (account == null) {
             System.out.println("Account number invalid.");
@@ -77,7 +81,7 @@ public class Wallet {
         displayAccountMenu(account);
     }
 
-    private static void openNewAccount() {
+    private static void openNewAccount() throws FileNotFoundException {
         System.out.print("Is this a new customer? (y/n): ");
         String choice = scan.nextLine();
 
@@ -93,17 +97,20 @@ public class Wallet {
                 System.out.println("Invalid PIN.");
                 return;
             }
+
         }
 
         System.out.print("Enter the initial deposit amount: ");
         double initialDeposit = Double.parseDouble(scan.nextLine());
         System.out.print("Enter the account currency type (3-letter code): ");
         String accountCurrencyType = scan.nextLine();
-        Account newAccount = new Account(initialDeposit, accountCurrencyType);
+        Account newAccount = new Account(initialDeposit, accountCurrencyType, customer.getPin());
         customer.addAccount(newAccount);
         System.out.println("New Account Number: " + newAccount.getAccountNumber());
+
+        Customer.saveCustomers();
     }
-    static void displayAccountMenu(Account account) {
+    static void displayAccountMenu(Account account) throws FileNotFoundException {
         while (true) {
             System.out.println("\n--- Account Menu ---");
             System.out.println("1) Deposit");
@@ -117,11 +124,13 @@ public class Wallet {
                     System.out.print("Enter the amount to deposit: ");
                     double depositAmount = Double.parseDouble(scan.nextLine());
                     account.deposit(depositAmount);
+                    Customer.saveCustomers();
                     break;
                 case 2:
                     System.out.print("Enter the amount to withdraw: ");
                     double withdrawalAmount = Double.parseDouble(scan.nextLine());
                     account.withdraw(withdrawalAmount);
+                    Customer.saveCustomers();
                     break;
                 case 3:
                     return; // Exit back to Main Menu
@@ -133,11 +142,11 @@ public class Wallet {
 
 
     static Customer createNewCustomer() {
-        System.out.print("Enter first name: ");
+        System.out.print("Enter first name: \n");
         String firstName = scan.nextLine();
-        System.out.print("Enter last name: ");
+        System.out.print("Enter last name: \n");
         String lastName = scan.nextLine();
-        System.out.print("Create a PIN: ");
+        System.out.print("Create a PIN: \n");
         String pin = scan.nextLine();
 
         Customer customer = new Customer(firstName, lastName, pin);
