@@ -1,13 +1,10 @@
 package edu.bsu.cs;
 
+import java.io.*;
 import java.util.ArrayList;
 
 public class Wallet {
-    private static ArrayList<Customer> customerArrayList;
-
-    public Wallet() {
-        customerArrayList = new ArrayList<>();
-    }
+    private static final ArrayList<Customer> customerArrayList = new ArrayList<>();
 
     public static void addCustomer(Customer customer) {
         customerArrayList.add(customer);
@@ -24,6 +21,24 @@ public class Wallet {
             }
         }
         return null;
+    }
+
+    public void saveCustomer(){
+
+    }
+
+    public void loadCustomer() throws IOException {
+        String line;
+        try (BufferedReader reader = new BufferedReader(new FileReader("SavedAccounts"))){
+            while ((line = reader.readLine()) != null){
+                String[] customerData = line.split(",");
+                String firstName = customerData[0];
+                String lastName = customerData[1];
+                String pin = customerData[2];
+                Customer customer = new Customer(firstName, lastName, pin);
+                addCustomer(customer);
+            }
+        }
     }
 
 }

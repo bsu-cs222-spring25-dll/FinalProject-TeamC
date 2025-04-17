@@ -1,5 +1,6 @@
 package edu.bsu.cs;
 
+import java.io.*;
 import java.util.ArrayList;
 
 public class Customer {
@@ -43,6 +44,32 @@ public class Customer {
             builder.append(account.toString()).append("\n");
         }
         return builder.toString();
+    }
+
+    public void loadCustomers(){
+        Wallet wallet = new Wallet();
+        String line;
+        InputStream saveFile = Thread.currentThread().getContextClassLoader().getResourceAsStream("SavedAccounts");
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(saveFile))){
+            while ((line = reader.readLine()) != null){
+                String[] customerData = line.split(",");
+                String firstName = customerData[0];
+                String lastName = customerData[1];
+                String pin = customerData[2];
+                Customer customer = new Customer(firstName, lastName, pin);
+                Wallet.addCustomer(customer);
+                double balance = Double.parseDouble(customerData[3]);
+                String currencyType = customerData[4];
+                String accountNumber = customerData[5];
+                Account account = new Account(balance, currencyType);
+                customer.addAccount(account);
+            }
+        } catch(IOException e){
+            System.out.println("Error while reading save file");
+            e.printStackTrace();
+        }
+    }
+    public void saveCustomers(){
     }
 
     @Override

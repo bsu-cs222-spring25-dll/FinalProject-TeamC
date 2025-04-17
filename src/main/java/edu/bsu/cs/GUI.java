@@ -68,7 +68,7 @@ public class GUI extends Application {
         startButton.setMinWidth(250);
         startButton.setMinHeight(60);
         startButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-        startButton.setOnAction(_ -> {
+        startButton.setOnAction(e -> {
             if (mainMenu == null) {
                 mainMenu = createMainMenuScene();
             }
@@ -119,11 +119,11 @@ public class GUI extends Application {
         Button marketHistoryBtn = createStyledButton("Market History", QUATERNARYCOLOR);
         Button quitBtn = createStyledButton("Quit", Color.web("#95a5a6"));
 
-        displayRatesBtn.setOnAction(_ -> window.setScene(createDisplayRatesScene()));
-        convertCurrencyBtn.setOnAction(_ -> window.setScene(createConvertCurrencyScene()));
-        walletBtn.setOnAction(_ -> window.setScene(createWalletScene()));
-        marketHistoryBtn.setOnAction(_ -> window.setScene(createMarketHistoryScene()));
-        quitBtn.setOnAction(_ -> window.close());
+        displayRatesBtn.setOnAction(e -> window.setScene(createDisplayRatesScene()));
+        convertCurrencyBtn.setOnAction(e -> window.setScene(createConvertCurrencyScene()));
+        walletBtn.setOnAction(e -> window.setScene(createWalletScene()));
+        marketHistoryBtn.setOnAction(e -> window.setScene(createMarketHistoryScene()));
+        quitBtn.setOnAction(e -> window.close());
 
         VBox mainMenuLayout = new VBox(30);
         mainMenuLayout.setPadding(new Insets(40));
@@ -142,12 +142,12 @@ public class GUI extends Application {
                 "-fx-padding: 10 20; " +
                 "-fx-background-radius: 5;");
         button.setMinWidth(200);
-        button.setOnMouseEntered(_ -> button.setStyle("-fx-background-color: " + toHex(color.darker()) + "; " +
+        button.setOnMouseEntered(e -> button.setStyle("-fx-background-color: " + toHex(color.darker()) + "; " +
                 "-fx-text-fill: white; " +
                 "-fx-font-weight: bold; " +
                 "-fx-padding: 10 20; " +
                 "-fx-background-radius: 5;"));
-        button.setOnMouseExited(_ -> button.setStyle("-fx-background-color: " + toHex(color) + "; " +
+        button.setOnMouseExited(e -> button.setStyle("-fx-background-color: " + toHex(color) + "; " +
                 "-fx-text-fill: white; " +
                 "-fx-font-weight: bold; " +
                 "-fx-padding: 10 20; " +
@@ -173,7 +173,7 @@ public class GUI extends Application {
             outputArea.setStyle("-fx-control-inner-background: #ecf0f1;");
 
             Button backBtn = createStyledButton("Back to Main Menu", Color.web("#95a5a6"));
-            backBtn.setOnAction(_ -> {
+            backBtn.setOnAction(e -> {
                 if (mainMenu == null) {
                     mainMenu = createMainMenuScene();
                 }
@@ -250,9 +250,9 @@ public class GUI extends Application {
         Button backButton = createStyledButton("Back to Main Menu", Color.web("#95a5a6"));
         GridPane.setConstraints(backButton, 0, 6, 2, 1);
         GridPane.setMargin(backButton, new Insets(20, 0, 0, 0));
-        backButton.setOnAction(_ -> window.setScene(mainMenu));
+        backButton.setOnAction(e -> window.setScene(mainMenu));
 
-        convertButton.setOnAction(_ -> {
+        convertButton.setOnAction(e -> {
             try {
                 String currencyFrom = fromComboBox.getValue();
                 String currencyTo = toComboBox.getValue();
@@ -296,7 +296,7 @@ public class GUI extends Application {
 
         ObservableList<String> originalItems = FXCollections.observableArrayList(currencies);
 
-        comboBox.getEditor().textProperty().addListener((_, _, newValue) -> {
+        comboBox.getEditor().textProperty().addListener((e, j, newValue) -> {
             if (newValue == null || newValue.isEmpty()) {
                 comboBox.getItems().setAll(originalItems);
                 comboBox.show();
@@ -310,9 +310,9 @@ public class GUI extends Application {
             }
         });
 
-        comboBox.setOnHidden(_ -> comboBox.getItems().setAll(originalItems));
+        comboBox.setOnHidden(e -> comboBox.getItems().setAll(originalItems));
 
-        comboBox.getEditor().textProperty().addListener((_, _, newValue) -> {
+        comboBox.getEditor().textProperty().addListener((e, j, newValue) -> {
             if (!newValue.toUpperCase().equals(newValue)) {
                 comboBox.getEditor().setText(newValue.toUpperCase());
             }

@@ -133,6 +133,7 @@ class ConsoleMenu {
         Customer customer;
         if (choice.equalsIgnoreCase("y")) {
             customer = createNewCustomer();
+
         } else {
             System.out.print("Enter your PIN: ");
             String pin = scan.nextLine();
@@ -142,10 +143,12 @@ class ConsoleMenu {
                 System.out.println("Invalid PIN.");
                 return;
             }
+
         }
 
         System.out.print("Enter the initial deposit amount: ");
         double initialDeposit = Double.parseDouble(scan.nextLine());
+        System.out.print("Enter the Currency type of initial deposit: ");
         String accountCurrencyType = String.join(scan.nextLine());
         Account newAccount = new Account(initialDeposit, accountCurrencyType);
         customer.addAccount(newAccount);
