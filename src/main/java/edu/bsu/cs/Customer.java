@@ -86,4 +86,5 @@ public class Customer {
     public ArrayList<Account> getAccountList() {
         return accountList;
     }
+    public int getAccountListAsNumber() {return accountList.size();}
 }

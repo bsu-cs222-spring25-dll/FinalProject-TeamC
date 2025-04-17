@@ -27,6 +27,9 @@ public class Wallet {
         }
         return null;
     }
+
+    public static int getSizeOfCustomerList() {return customerArrayList.size();}
+
     public static void accessWallet() {
         while (true) {
             System.out.println("\n--- Wallet Menu ---");
