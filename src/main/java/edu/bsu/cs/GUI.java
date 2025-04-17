@@ -29,11 +29,13 @@ public class GUI extends Application {
 
 
 
-    private final Color PRIMARYECOLOR = Color.web("#3498db");
-    private final Color SECONDARYECOLOR = Color.web("#2ecc71");
-    private final Color BACKGROUNDECOLOR = Color.web("#f5f7fa");
-    private final Color TEXTECOLOR = Color.web("#2c3e50");
-    private final Color ACCENTECOLOR = Color.web("#9b59b6");
+    private final Color PRIMARYCOLOR = Color.web("#f67280");
+    private final Color SECONDARYCOLOR = Color.web("#c06c84");
+    private final Color TERTIARYCOLOR = Color.web("#6c5b78");
+    private final Color QUATERNARYCOLOR = Color.web("#f8b195");
+    private final Color BACKGROUNDCOLOR = Color.web("#355c7d");
+    private final Color TEXTCOLOR = Color.web("#fffff0");
+    private final Color ACCENTCOLOR = Color.web("#9b59b6");
 
     @Override
     public void start(Stage primaryStage) {
@@ -54,15 +56,15 @@ public class GUI extends Application {
 
         Label titleLabel = new Label("Currency Converter");
         titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 36));
-        titleLabel.setTextFill(PRIMARYECOLOR);
+        titleLabel.setTextFill(TEXTCOLOR);
 
 
         Label subtitleLabel = new Label("Your reliable currency conversion tool");
         subtitleLabel.setFont(Font.font("Arial", 16));
-        subtitleLabel.setTextFill(TEXTECOLOR);
+        subtitleLabel.setTextFill(TEXTCOLOR);
 
 
-        Button startButton = createStyledButton("Get Started", SECONDARYECOLOR);
+        Button startButton = createStyledButton("Get Started", SECONDARYCOLOR);
         startButton.setMinWidth(250);
         startButton.setMinHeight(60);
         startButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
@@ -82,16 +84,16 @@ public class GUI extends Application {
         VBox layout = new VBox(30);
         layout.setPadding(new Insets(40));
         layout.setAlignment(Pos.CENTER);
-        layout.setBackground(new Background(new BackgroundFill(BACKGROUNDECOLOR, CornerRadii.EMPTY, Insets.EMPTY)));
+        layout.setBackground(new Background(new BackgroundFill(BACKGROUNDCOLOR, CornerRadii.EMPTY, Insets.EMPTY)));
         layout.getChildren().addAll(titleLabel, subtitleLabel, startButton, versionLabel);
 
 
         StackPane rootPane = new StackPane();
-        rootPane.setBackground(new Background(new BackgroundFill(BACKGROUNDECOLOR, CornerRadii.EMPTY, Insets.EMPTY)));
+        rootPane.setBackground(new Background(new BackgroundFill(BACKGROUNDCOLOR, CornerRadii.EMPTY, Insets.EMPTY)));
 
 
-        Circle decor1 = new Circle(50, ACCENTECOLOR);
-        Circle decor2 = new Circle(30, PRIMARYECOLOR);
+        Circle decor1 = new Circle(50, ACCENTCOLOR);
+        Circle decor2 = new Circle(30, PRIMARYCOLOR);
         decor1.setOpacity(0.1);
         decor2.setOpacity(0.1);
 
@@ -109,20 +111,24 @@ public class GUI extends Application {
     private Scene createMainMenuScene() {
         Label titleLabel = new Label("Currency Converter");
         titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
-        titleLabel.setTextFill(TEXTECOLOR);
+        titleLabel.setTextFill(TEXTCOLOR);
 
-        Button displayRatesBtn = createStyledButton("Display Exchange Rates", PRIMARYECOLOR);
-        Button convertCurrencyBtn = createStyledButton("Convert Currency", SECONDARYECOLOR);
+        Button displayRatesBtn = createStyledButton("Display Exchange Rates", PRIMARYCOLOR);
+        Button convertCurrencyBtn = createStyledButton("Convert Currency", SECONDARYCOLOR);
+        Button walletBtn = createStyledButton("Wallet", TERTIARYCOLOR);
+        Button marketHistoryBtn = createStyledButton("Market History", QUATERNARYCOLOR);
         Button quitBtn = createStyledButton("Quit", Color.web("#95a5a6"));
 
         displayRatesBtn.setOnAction(_ -> window.setScene(createDisplayRatesScene()));
         convertCurrencyBtn.setOnAction(_ -> window.setScene(createConvertCurrencyScene()));
+        walletBtn.setOnAction(_ -> window.setScene(createWalletScene()));
+        marketHistoryBtn.setOnAction(_ -> window.setScene(createMarketHistoryScene()));
         quitBtn.setOnAction(_ -> window.close());
 
         VBox mainMenuLayout = new VBox(30);
         mainMenuLayout.setPadding(new Insets(40));
         mainMenuLayout.setAlignment(Pos.CENTER);
-        mainMenuLayout.setBackground(new Background(new BackgroundFill(BACKGROUNDECOLOR, CornerRadii.EMPTY, Insets.EMPTY)));
+        mainMenuLayout.setBackground(new Background(new BackgroundFill(BACKGROUNDCOLOR, CornerRadii.EMPTY, Insets.EMPTY)));
         mainMenuLayout.getChildren().addAll(titleLabel, displayRatesBtn, convertCurrencyBtn, quitBtn);
 
         return new Scene(mainMenuLayout, 500, 400);
@@ -180,7 +186,7 @@ public class GUI extends Application {
 
             VBox layout = new VBox(20);
             layout.setPadding(new Insets(20));
-            layout.setBackground(new Background(new BackgroundFill(BACKGROUNDECOLOR, CornerRadii.EMPTY, Insets.EMPTY)));
+            layout.setBackground(new Background(new BackgroundFill(BACKGROUNDCOLOR, CornerRadii.EMPTY, Insets.EMPTY)));
             layout.getChildren().addAll(scrollPane, backBtn);
 
             return new Scene(layout, 700, 500);
@@ -196,11 +202,11 @@ public class GUI extends Application {
         grid.setVgap(15);
         grid.setHgap(15);
         grid.setAlignment(Pos.CENTER);
-        grid.setBackground(new Background(new BackgroundFill(BACKGROUNDECOLOR, CornerRadii.EMPTY, Insets.EMPTY)));
+        grid.setBackground(new Background(new BackgroundFill(BACKGROUNDCOLOR, CornerRadii.EMPTY, Insets.EMPTY)));
 
         Label titleLabel = new Label("Currency Conversion");
         titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-        titleLabel.setTextFill(TEXTECOLOR);
+        titleLabel.setTextFill(TEXTCOLOR);
         GridPane.setConstraints(titleLabel, 0, 0, 2, 1);
         GridPane.setMargin(titleLabel, new Insets(0, 0, 20, 0));
 
@@ -230,14 +236,14 @@ public class GUI extends Application {
         TextField amountField = createStyledTextField();
         GridPane.setConstraints(amountField, 1, 3);
 
-        Button convertButton = createStyledButton("Convert", SECONDARYECOLOR);
+        Button convertButton = createStyledButton("Convert", SECONDARYCOLOR);
         GridPane.setConstraints(convertButton, 1, 4);
         GridPane.setMargin(convertButton, new Insets(20, 0, 0, 0));
 
         Label resultLabel = new Label();
         resultLabel.setWrapText(true);
         resultLabel.setFont(Font.font("Arial", FontWeight.BOLD, 14));
-        resultLabel.setTextFill(TEXTECOLOR);
+        resultLabel.setTextFill(TEXTCOLOR);
         GridPane.setConstraints(resultLabel, 0, 5, 2, 1);
         GridPane.setMargin(resultLabel, new Insets(20, 0, 0, 0));
 
@@ -318,7 +324,7 @@ public class GUI extends Application {
     private Label createStyledLabel(String text) {
         Label label = new Label(text);
         label.setFont(Font.font("Arial", 14));
-        label.setTextFill(TEXTECOLOR);
+        label.setTextFill(TEXTCOLOR);
         return label;
     }
 
@@ -337,14 +343,23 @@ public class GUI extends Application {
         alert.setContentText(message);
 
         DialogPane dialogPane = alert.getDialogPane();
-        dialogPane.setStyle("-fx-background-color: " + toHex(BACKGROUNDECOLOR) + ";");
+        dialogPane.setStyle("-fx-background-color: " + toHex(BACKGROUNDCOLOR) + ";");
         dialogPane.setHeader(null);
-        dialogPane.lookup(".content.label").setStyle("-fx-text-fill: " + toHex(TEXTECOLOR) + ";");
+        dialogPane.lookup(".content.label").setStyle("-fx-text-fill: " + toHex(TEXTCOLOR) + ";");
 
         ButtonBar buttonBar = (ButtonBar) dialogPane.lookup(".button-bar");
         buttonBar.setStyle("-fx-background-color: transparent;");
 
         alert.showAndWait();
+    }
+
+    private Scene createWalletScene(){
+
+        return null;
+    }
+
+    private Scene createMarketHistoryScene() {
+        return null;
     }
 
     public static void main(String[] args) {

@@ -3,13 +3,13 @@ package edu.bsu.cs;
 import java.util.ArrayList;
 
 public class Wallet {
-    private final ArrayList<Customer> customerArrayList;
+    private static ArrayList<Customer> customerArrayList;
 
     public Wallet() {
         customerArrayList = new ArrayList<>();
     }
 
-    public void addCustomer(Customer customer) {
+    public static void addCustomer(Customer customer) {
         customerArrayList.add(customer);
     }
     public boolean removeCustomer(Customer customer) {
@@ -17,7 +17,7 @@ public class Wallet {
     }
 
     // Returns the customer if found by account PIN, else returns null
-    public Customer getCustomer(String pin) {
+    public static Customer getCustomer(String pin) {
         for (Customer customer : customerArrayList) {
             if (customer.getPin().equals(pin)) {
                 return customer;

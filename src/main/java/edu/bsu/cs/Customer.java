@@ -13,7 +13,7 @@ public class Customer {
         this.firstName = firstName;
         this.lastName = lastName;
         this.pin = pin;
-        this.accountList = new ArrayList<>(); // Initialize accountList
+        this.accountList = new ArrayList<>();
     }
 
     // Method to add an account to the customer
@@ -21,13 +21,8 @@ public class Customer {
         accountList.add(account);
     }
 
-    // Method to remove an account from the customer
-    public void removeAccount(Account account) {
-        accountList.remove(account);
-    }
 
     // Method to get the details of an account
-
     public Account getAccount(String accountNumber) {
         for (Account account : accountList) {
             if (account.getAccountNumber().equals(accountNumber)) {
@@ -37,7 +32,6 @@ public class Customer {
         return null;
     }
 
-    // public void getCustomer;
 
     // Method to get the details of all the accounts of a customer
     public String getAllAccounts() {
