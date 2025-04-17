@@ -354,7 +354,6 @@ public class GUI extends Application {
     }
 
     private Scene createWalletScene(){
-
         return null;
     }
 

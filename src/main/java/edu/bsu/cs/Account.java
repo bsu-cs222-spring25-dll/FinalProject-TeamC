@@ -18,7 +18,7 @@ public class Account {
         if (depositAmount > 0) {
             balance += depositAmount;
             System.out.println("Deposited " + depositAmount);
-            System.out.println("Updated balance: " + balance);
+            System.out.println("Updated balance: " + balance + accountCurrencyType);
         } else{
             System.out.println("Invalid Deposit");
         }
@@ -30,7 +30,7 @@ public class Account {
         } else if (withdrawAmount > 0) {
             balance -= withdrawAmount;
             System.out.println("Withdrawn " + withdrawAmount);
-            System.out.println("Updated balance: " + balance);
+            System.out.println("Updated balance: " + balance + accountCurrencyType);
         }else {
             System.out.println("Invalid Amount");
         }
@@ -38,16 +38,14 @@ public class Account {
 
     @Override
     public String toString() {
-        return String.format("Balance: %.2f\nAccount Number: %s\n",
+        return String.format("Balance: %.2f " + accountCurrencyType + "\nAccount Number: %s",
                 balance, accountNumber);
+
     }
     public double getBalance() {
         return balance;
     }
     public String getAccountNumber() {
         return accountNumber;
-    }
-    public static int getNumOfAccounts() {
-        return numOfAccounts;
     }
 }
