@@ -11,10 +11,7 @@ class ConsoleMenu {
     private final CallForRates ratesCaller = new CallForRates();
     Scanner scan = new Scanner(System.in);
 
-    public void runMenu() throws IOException {
-        JSONDataGetter dataGetter = new JSONDataGetter();
-        APIConnection apiConnection = new APIConnection();
-        String data = dataGetter.dataGetter(APIConnection.encodedUrlString());
+    public void runMenu() {
         System.out.println("""
                 ***Welcome***
                 Select an option
@@ -35,7 +32,7 @@ class ConsoleMenu {
                 Wallet.accessWallet();
                 break;
             case 4:
-                //marketHistory();
+                marketHistory();
             case 5:
                 break;
         }
@@ -80,8 +77,7 @@ class ConsoleMenu {
         System.out.println("Converting from " + currencyFrom + " to " + currencyTo + " with " + decimalFormat.format(startingAmountFloat) +
                 " gives you " + decimalFormat.format(converter.convertUsingAmount(rateList, startingAmountFloat)) + " in " + currencyTo);
     }
+    public void marketHistory(){
 
-    //public void marketHistory(){
-
-    //}
+    }
 }
