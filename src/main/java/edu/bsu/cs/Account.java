@@ -4,14 +4,13 @@ public class Account {
     private double balance ;
     private String accountCurrencyType;
     private String accountNumber;
-    private String pin;
     private static int numOfAccounts = 1000;
+    private String pin;
 
     public Account(double initialDeposit, String accountCurrencyType, String pin) {
         this.balance = initialDeposit;
         this.accountCurrencyType = accountCurrencyType;
         this.accountNumber = "" + numOfAccounts;
-        this.pin = pin;
         numOfAccounts++;
     }
 
@@ -47,10 +46,18 @@ public class Account {
     public double getBalance() {
         return balance;
     }
-    public String getAccountCurrencyType(){return accountCurrencyType;}
     public String getAccountNumber() {
         return accountNumber;
     }
 
-    public String getAccountPin(){return pin; }
+    public CharSequence getAccountCurrencyType() {
+        return accountCurrencyType;
+    }
+
+    public void setAccountCurrencyType(Object accountCurrencyType) {
+        this.accountCurrencyType = accountCurrencyType.toString();
+    }
+    public String getAccountPin(){
+        return pin;
+    }
 }

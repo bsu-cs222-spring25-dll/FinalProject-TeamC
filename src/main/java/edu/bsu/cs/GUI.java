@@ -13,6 +13,12 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import javafx.animation.PauseTransition;
+import javafx.stage.Modality;
+import javafx.util.Duration;
+import javafx.scene.control.ListView;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -68,7 +74,7 @@ public class GUI extends Application {
         startButton.setMinWidth(250);
         startButton.setMinHeight(60);
         startButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-        startButton.setOnAction(e -> {
+        startButton.setOnAction(_ -> {
             if (mainMenu == null) {
                 mainMenu = createMainMenuScene();
             }
@@ -105,7 +111,7 @@ public class GUI extends Application {
 
         rootPane.getChildren().addAll(decorPane, layout);
 
-        return new Scene(rootPane, 600, 500);
+        return new Scene(rootPane, 700, 650);
     }
 
     private Scene createMainMenuScene() {
@@ -119,19 +125,24 @@ public class GUI extends Application {
         Button marketHistoryBtn = createStyledButton("Market History", QUATERNARYCOLOR);
         Button quitBtn = createStyledButton("Quit", Color.web("#95a5a6"));
 
-        displayRatesBtn.setOnAction(e -> window.setScene(createDisplayRatesScene()));
-        convertCurrencyBtn.setOnAction(e -> window.setScene(createConvertCurrencyScene()));
-        walletBtn.setOnAction(e -> window.setScene(createWalletScene()));
-        marketHistoryBtn.setOnAction(e -> window.setScene(createMarketHistoryScene()));
-        quitBtn.setOnAction(e -> window.close());
+        displayRatesBtn.setOnAction(_ -> window.setScene(createDisplayRatesScene()));
+        convertCurrencyBtn.setOnAction(_ -> window.setScene(createConvertCurrencyScene()));
+        walletBtn.setOnAction(_ -> window.setScene(createWalletScene()));
+        marketHistoryBtn.setOnAction(_ -> window.setScene(createMarketHistoryScene()));
+        quitBtn.setOnAction(_ -> window.close());
 
         VBox mainMenuLayout = new VBox(30);
         mainMenuLayout.setPadding(new Insets(40));
         mainMenuLayout.setAlignment(Pos.CENTER);
         mainMenuLayout.setBackground(new Background(new BackgroundFill(BACKGROUNDCOLOR, CornerRadii.EMPTY, Insets.EMPTY)));
-        mainMenuLayout.getChildren().addAll(titleLabel, displayRatesBtn, convertCurrencyBtn, quitBtn);
+        mainMenuLayout.getChildren().addAll(titleLabel,
+                displayRatesBtn,
+                convertCurrencyBtn,
+                walletBtn,
+                marketHistoryBtn,
+                quitBtn);
 
-        return new Scene(mainMenuLayout, 500, 400);
+        return new Scene(mainMenuLayout, 700, 650);
     }
 
     private Button createStyledButton(String text, Color color) {
@@ -142,12 +153,12 @@ public class GUI extends Application {
                 "-fx-padding: 10 20; " +
                 "-fx-background-radius: 5;");
         button.setMinWidth(200);
-        button.setOnMouseEntered(e -> button.setStyle("-fx-background-color: " + toHex(color.darker()) + "; " +
+        button.setOnMouseEntered(_ -> button.setStyle("-fx-background-color: " + toHex(color.darker()) + "; " +
                 "-fx-text-fill: white; " +
                 "-fx-font-weight: bold; " +
                 "-fx-padding: 10 20; " +
                 "-fx-background-radius: 5;"));
-        button.setOnMouseExited(e -> button.setStyle("-fx-background-color: " + toHex(color) + "; " +
+        button.setOnMouseExited(_ -> button.setStyle("-fx-background-color: " + toHex(color) + "; " +
                 "-fx-text-fill: white; " +
                 "-fx-font-weight: bold; " +
                 "-fx-padding: 10 20; " +
@@ -173,7 +184,7 @@ public class GUI extends Application {
             outputArea.setStyle("-fx-control-inner-background: #ecf0f1;");
 
             Button backBtn = createStyledButton("Back to Main Menu", Color.web("#95a5a6"));
-            backBtn.setOnAction(e -> {
+            backBtn.setOnAction(_ -> {
                 if (mainMenu == null) {
                     mainMenu = createMainMenuScene();
                 }
@@ -189,7 +200,7 @@ public class GUI extends Application {
             layout.setBackground(new Background(new BackgroundFill(BACKGROUNDCOLOR, CornerRadii.EMPTY, Insets.EMPTY)));
             layout.getChildren().addAll(scrollPane, backBtn);
 
-            return new Scene(layout, 700, 500);
+            return new Scene(layout, 700, 650);
         } catch (IOException e) {
             showAlert("Failed to fetch exchange rates");
             return mainMenu;
@@ -250,9 +261,9 @@ public class GUI extends Application {
         Button backButton = createStyledButton("Back to Main Menu", Color.web("#95a5a6"));
         GridPane.setConstraints(backButton, 0, 6, 2, 1);
         GridPane.setMargin(backButton, new Insets(20, 0, 0, 0));
-        backButton.setOnAction(e -> window.setScene(mainMenu));
+        backButton.setOnAction(_ -> window.setScene(mainMenu));
 
-        convertButton.setOnAction(e -> {
+        convertButton.setOnAction(_ -> {
             try {
                 String currencyFrom = fromComboBox.getValue();
                 String currencyTo = toComboBox.getValue();
@@ -283,7 +294,7 @@ public class GUI extends Application {
         grid.getChildren().addAll(titleLabel, fromLabel, fromComboBox, toLabel, toComboBox,
                 amountLabel, amountField, convertButton, resultLabel, backButton);
 
-        return new Scene(grid, 500, 500);
+        return new Scene(grid, 700, 650);
     }
 
     private ComboBox<String> createEditableCurrencyComboBox(List<String> currencies) {
@@ -310,9 +321,9 @@ public class GUI extends Application {
             }
         });
 
-        comboBox.setOnHidden(e -> comboBox.getItems().setAll(originalItems));
+        comboBox.setOnHidden(_ -> comboBox.getItems().setAll(originalItems));
 
-        comboBox.getEditor().textProperty().addListener((e, j, newValue) -> {
+        comboBox.getEditor().textProperty().addListener((_, j, newValue) -> {
             if (!newValue.toUpperCase().equals(newValue)) {
                 comboBox.getEditor().setText(newValue.toUpperCase());
             }
@@ -328,6 +339,7 @@ public class GUI extends Application {
         return label;
     }
 
+
     private TextField createStyledTextField() {
         TextField textField = new TextField();
         textField.setPromptText("e.g. 100.00");
@@ -335,6 +347,7 @@ public class GUI extends Application {
         textField.setMaxWidth(200);
         return textField;
     }
+
 
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -353,8 +366,352 @@ public class GUI extends Application {
         alert.showAndWait();
     }
 
-    private Scene createWalletScene(){
-        return null;
+
+    private Scene createWalletScene() {
+        VBox mainLayout = new VBox(20);
+        mainLayout.setPadding(new Insets(20));
+        mainLayout.setAlignment(Pos.CENTER);
+        mainLayout.setBackground(new Background(new BackgroundFill(BACKGROUNDCOLOR, CornerRadii.EMPTY, Insets.EMPTY)));
+
+        Label titleLabel = new Label("Wallet Management");
+        titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+        titleLabel.setTextFill(TEXTCOLOR);
+
+        Button accessAccountBtn = createStyledButton("Access Account", PRIMARYCOLOR);
+        Button openAccountBtn = createStyledButton("Open New Account", SECONDARYCOLOR);
+        Button backBtn = createStyledButton("Back to Main Menu", Color.web("#95a5a6"));
+
+        accessAccountBtn.setOnAction(_ -> window.setScene(createAccessAccountScene()));
+        openAccountBtn.setOnAction(_ -> window.setScene(createOpenAccountScene()));
+        backBtn.setOnAction(_ -> window.setScene(mainMenu));
+
+        mainLayout.getChildren().addAll(titleLabel, accessAccountBtn, openAccountBtn, backBtn);
+        return new Scene(mainLayout, 700, 650);
+    }
+
+
+    private Scene createAccessAccountScene() {
+        VBox layout = new VBox(20);
+        layout.setPadding(new Insets(20));
+        layout.setAlignment(Pos.CENTER);
+        layout.setBackground(new Background(new BackgroundFill(BACKGROUNDCOLOR, CornerRadii.EMPTY, Insets.EMPTY)));
+
+        Label titleLabel = new Label("Access Account");
+        titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+        titleLabel.setTextFill(TEXTCOLOR);
+
+        Label pinLabel = createStyledLabel("Enter your PIN:");
+        TextField pinField = createStyledTextField();
+        pinField.setPromptText("4-digit PIN");
+
+        Button submitBtn = createStyledButton("Submit", PRIMARYCOLOR);
+        Button backBtn = createStyledButton("Back to Wallet", Color.web("#95a5a6"));
+
+        Label errorLabel = new Label();
+        errorLabel.setTextFill(Color.web("#e74c3c"));
+        errorLabel.setVisible(false);
+
+        VBox accountDisplay = new VBox(10);
+        accountDisplay.setAlignment(Pos.CENTER);
+        accountDisplay.setVisible(false);
+
+        submitBtn.setOnAction(_ -> {
+            String pin = pinField.getText();
+            Customer customer = Wallet.getCustomer(pin);
+
+            if (customer == null) {
+                errorLabel.setText("Invalid PIN. Please try again.");
+                errorLabel.setVisible(true);
+                accountDisplay.setVisible(false);
+                return;
+            }
+
+            errorLabel.setVisible(false);
+            accountDisplay.getChildren().clear();
+
+            Label customerLabel = new Label("Customer: " + customer.getFirstName() + " " + customer.getLastName());
+            customerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+            customerLabel.setTextFill(TEXTCOLOR);
+
+            ListView<String> accountsList = new ListView<>();
+            ObservableList<String> accounts = FXCollections.observableArrayList();
+
+            for (Account account : customer.getAccountList()) {
+                accounts.add(String.format("Account #%s - Balance: %.2f %s",
+                        account.getAccountNumber(),
+                        account.getBalance(),
+                        account.getAccountCurrencyType()));
+            }
+
+            accountsList.setItems(accounts);
+            accountsList.setMaxHeight(150);
+
+            Button manageAccountBtn = createStyledButton("Manage Selected Account", SECONDARYCOLOR);
+            manageAccountBtn.setDisable(true);
+
+            accountsList.getSelectionModel().selectedItemProperty().addListener((_, _, newValue) -> manageAccountBtn.setDisable(newValue == null));
+
+            manageAccountBtn.setOnAction(_ -> {
+                String selected = accountsList.getSelectionModel().getSelectedItem();
+                if (selected != null) {
+                    String accountNumber = selected.split(" - ")[0].replace("Account #", "");
+                    Account account = customer.getAccount(accountNumber, customer);
+                    if (account != null) {
+                        window.setScene(createManageAccountScene(customer, account));
+                    }
+                }
+            });
+
+            accountDisplay.getChildren().addAll(customerLabel, accountsList, manageAccountBtn);
+            accountDisplay.setVisible(true);
+        });
+
+        backBtn.setOnAction(_ -> window.setScene(createWalletScene()));
+
+        layout.getChildren().addAll(titleLabel, pinLabel, pinField, submitBtn, errorLabel, accountDisplay, backBtn);
+        return new Scene(layout, 700, 650);
+    }
+
+
+    private Scene createOpenAccountScene() {
+        VBox layout = new VBox(10);
+        layout.setPadding(new Insets(5, 20, 15, 20));
+        layout.setAlignment(Pos.CENTER);
+        layout.setBackground(new Background(new BackgroundFill(BACKGROUNDCOLOR, CornerRadii.EMPTY, Insets.EMPTY)));
+
+        Label titleLabel = new Label("Open New Account");
+        titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+        titleLabel.setTextFill(TEXTCOLOR);
+
+        ToggleGroup customerGroup = new ToggleGroup();
+        RadioButton existingCustomerBtn = new RadioButton("Existing Customer");
+        RadioButton newCustomerBtn = new RadioButton("New Customer");
+        existingCustomerBtn.setToggleGroup(customerGroup);
+        newCustomerBtn.setToggleGroup(customerGroup);
+        existingCustomerBtn.setSelected(true);
+
+        existingCustomerBtn.setTextFill(TEXTCOLOR);
+        newCustomerBtn.setTextFill(TEXTCOLOR);
+
+
+        VBox existingCustomerFields = new VBox(10);
+        Label pinLabel = createStyledLabel("Enter your PIN:");
+        TextField pinField = createStyledTextField();
+        existingCustomerFields.getChildren().addAll(pinLabel, pinField);
+
+        VBox newCustomerFields = new VBox(10);
+        Label firstNameLabel = createStyledLabel("First Name:");
+        TextField firstNameField = createStyledTextField();
+        Label lastNameLabel = createStyledLabel("Last Name:");
+        TextField lastNameField = createStyledTextField();
+        Label newPinLabel = createStyledLabel("Create PIN:");
+        TextField newPinField = createStyledTextField();
+        newCustomerFields.getChildren().addAll(firstNameLabel, firstNameField, lastNameLabel, lastNameField, newPinLabel, newPinField);
+        newCustomerFields.setVisible(false);
+
+        customerGroup.selectedToggleProperty().addListener((_, _, newToggle) -> {
+            if (newToggle == existingCustomerBtn) {
+                existingCustomerFields.setVisible(true);
+                newCustomerFields.setVisible(false);
+            } else {
+                existingCustomerFields.setVisible(false);
+                newCustomerFields.setVisible(true);
+            }
+        });
+
+        Label currencyLabel = createStyledLabel("Account Currency:");
+        ComboBox<String> currencyComboBox = createEditableCurrencyComboBox(
+                List.of("USD", "EUR", "GBP", "JPY", "CAD", "AUD", "CNY", "INR", "MXN"));
+
+        Label amountLabel = createStyledLabel("Initial Deposit:");
+        TextField amountField = createStyledTextField();
+        amountField.setPromptText("0.00");
+
+        Button submitBtn = createStyledButton("Create Account", PRIMARYCOLOR);
+        Button backBtn = createStyledButton("Back to Wallet", Color.web("#95a5a6"));
+        backBtn.setOnAction(_ -> window.setScene(createWalletScene()));
+
+        Label resultLabel = new Label();
+        resultLabel.setTextFill(TEXTCOLOR);
+        resultLabel.setVisible(false);
+
+        submitBtn.setOnAction(_ -> {
+            try {
+                Customer customer;
+
+                if (existingCustomerBtn.isSelected()) {
+                    String pin = pinField.getText();
+                    customer = Wallet.getCustomer(pin);
+                    if (customer == null) {
+                        resultLabel.setText("Invalid PIN. Customer not found.");
+                        resultLabel.setVisible(true);
+                        return;
+                    }
+                } else {
+                    String firstName = firstNameField.getText();
+                    String lastName = lastNameField.getText();
+                    String pin = newPinField.getText();
+
+                    if (firstName.isEmpty() || lastName.isEmpty() || pin.isEmpty()) {
+                        resultLabel.setText("Please fill all customer details");
+                        resultLabel.setVisible(true);
+                        return;
+                    }
+
+                    customer = new Customer(firstName, lastName, pin);
+                    Wallet.addCustomer(customer);
+                }
+
+                String currency = currencyComboBox.getValue();
+                if (currency == null || currency.isEmpty()) {
+                    resultLabel.setText("Please select a currency");
+                    resultLabel.setVisible(true);
+                    return;
+                }
+
+                double amount = Double.parseDouble(amountField.getText());
+                if (amount < 0) {
+                    resultLabel.setText("Initial deposit cannot be negative");
+                    resultLabel.setVisible(true);
+                    return;
+                }
+
+                Account newAccount = new Account(amount, currency, customer.getPin());
+                customer.addAccount(newAccount);
+
+                resultLabel.setText(String.format("Account created successfully!\nAccount #: %s\nBalance: %.2f %s",
+                        newAccount.getAccountNumber(),
+                        newAccount.getBalance(),
+                        currency));
+                resultLabel.setVisible(true);
+
+                if (existingCustomerBtn.isSelected()) {
+                    pinField.clear();
+                } else {
+                    firstNameField.clear();
+                    lastNameField.clear();
+                    newPinField.clear();
+                }
+                amountField.clear();
+                currencyComboBox.getSelectionModel().clearSelection();
+
+            } catch (NumberFormatException e) {
+                resultLabel.setText("Invalid amount format. Please enter a valid number.");
+                resultLabel.setVisible(true);
+            }
+        });
+
+        layout.getChildren().addAll(
+                titleLabel,
+                new HBox(20, existingCustomerBtn, newCustomerBtn),
+                existingCustomerFields,
+                newCustomerFields,
+                currencyLabel,
+                currencyComboBox,
+                amountLabel,
+                amountField,
+                submitBtn,
+                resultLabel,
+                backBtn);
+
+        return new Scene(layout, 700, 650);
+
+    }
+
+    private Scene createManageAccountScene(Customer customer, Account account) {
+        VBox layout = new VBox(20);
+        layout.setPadding(new Insets(20));
+        layout.setAlignment(Pos.CENTER);
+        layout.setBackground(new Background(new BackgroundFill(BACKGROUNDCOLOR, CornerRadii.EMPTY, Insets.EMPTY)));
+
+        Label titleLabel = new Label(String.format("Manage Account #%s", account.getAccountNumber()));
+        titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+        titleLabel.setTextFill(TEXTCOLOR);
+
+        Label balanceLabel = new Label(String.format("Current Balance: %.2f %s",
+                account.getBalance(), account.getAccountCurrencyType()));
+        balanceLabel.setFont(Font.font("Arial", 16));
+        balanceLabel.setTextFill(TEXTCOLOR);
+
+        Button depositBtn = createStyledButton("Deposit", PRIMARYCOLOR);
+        Button withdrawBtn = createStyledButton("Withdraw", SECONDARYCOLOR);
+        Button backBtn = createStyledButton("Back to Accounts", Color.web("#95a5a6"));
+
+        depositBtn.setOnAction(_ -> showTransactionDialog(customer, account, "Deposit", true));
+        withdrawBtn.setOnAction(_ -> showTransactionDialog(customer, account, "Withdraw", false));
+        backBtn.setOnAction(_ -> window.setScene(createAccessAccountScene()));
+
+        layout.getChildren().addAll(titleLabel, balanceLabel, depositBtn, withdrawBtn, backBtn);
+        return new Scene(layout, 700, 650);
+    }
+
+    private void showTransactionDialog(Customer customer, Account account, String transactionType, boolean isDeposit) {
+        Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.setTitle(transactionType);
+
+        VBox dialogLayout = new VBox(20);
+        dialogLayout.setPadding(new Insets(20));
+        dialogLayout.setAlignment(Pos.CENTER);
+        dialogLayout.setBackground(new Background(new BackgroundFill(BACKGROUNDCOLOR, CornerRadii.EMPTY, Insets.EMPTY)));
+
+        Label amountLabel = new Label(transactionType + " Amount:");
+        amountLabel.setFont(Font.font("Arial", 14));
+        amountLabel.setTextFill(TEXTCOLOR);
+
+        TextField amountField = createStyledTextField();
+        amountField.setPromptText("0.00");
+
+        Button submitBtn = createStyledButton("Submit", isDeposit ? PRIMARYCOLOR : SECONDARYCOLOR);
+        Button cancelBtn = createStyledButton("Cancel", Color.web("#95a5a6"));
+
+        Label resultLabel = new Label();
+        resultLabel.setTextFill(TEXTCOLOR);
+
+        submitBtn.setOnAction(_ -> {
+            try {
+                double amount = Double.parseDouble(amountField.getText());
+                if (amount <= 0) {
+                    resultLabel.setText("Amount must be positive");
+                    return;
+                }
+
+                if (isDeposit) {
+                    account.deposit(amount);
+                } else {
+                    if (amount > account.getBalance()) {
+                        resultLabel.setText("Insufficient funds");
+                        return;
+                    }
+                    account.withdraw(amount);
+                }
+
+                resultLabel.setText(String.format("%s successful!\nNew Balance: %.2f %s",
+                        transactionType,
+                        account.getBalance(),
+                        account.getAccountCurrencyType()));
+
+                PauseTransition delay = new PauseTransition(Duration.seconds(1.5));
+                delay.setOnFinished(_ -> dialog.close());
+                delay.play();
+
+            } catch (NumberFormatException e) {
+                resultLabel.setText("Invalid amount format");
+            }
+        });
+
+        cancelBtn.setOnAction(_ -> dialog.close());
+
+        HBox buttonBox = new HBox(20, submitBtn, cancelBtn);
+        buttonBox.setAlignment(Pos.CENTER);
+
+        dialogLayout.getChildren().addAll(amountLabel, amountField, buttonBox, resultLabel);
+
+        Scene dialogScene = new Scene(dialogLayout, 300, 200);
+        dialog.setScene(dialogScene);
+        dialog.showAndWait();
+
+        window.setScene(createManageAccountScene(customer, account));
     }
 
     private Scene createMarketHistoryScene() {

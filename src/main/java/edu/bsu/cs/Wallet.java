@@ -1,25 +1,17 @@
 package edu.bsu.cs;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Wallet {
     static Scanner scan = new Scanner(System.in);
-    private static ArrayList<Customer> customerArrayList = new ArrayList<>();
+    private static final ArrayList<Customer> customerArrayList = new ArrayList<>();
 
-    //public Wallet() {
-    //    customerArrayList = new ArrayList<>();
-    //}
 
     public static void addCustomer(Customer customer) {
         customerArrayList.add(customer);
     }
-    public boolean removeCustomer(Customer customer) {
-        return customerArrayList.remove(customer);
-    }
 
-    // Returns the customer if found by account PIN, else returns null
     public static Customer getCustomer(String pin) {
         for (Customer customer : customerArrayList) {
             if (customer.getPin().equals(pin)) {
@@ -32,7 +24,7 @@ public class Wallet {
     public static int getSizeOfCustomerList() {return customerArrayList.size();}
     public static ArrayList<Customer> getCustomerArrayList(){return customerArrayList;}
 
-    public static void accessWallet() throws FileNotFoundException {
+    public static void accessWallet() {
         while (true) {
             System.out.println("\n--- Wallet Menu ---");
             System.out.println("1) Access Account");
@@ -56,7 +48,7 @@ public class Wallet {
             }
         }
     }
-    public static void accessAccount() throws FileNotFoundException {
+    public static void accessAccount() {
         System.out.print("Enter your PIN: ");
         String pin = scan.nextLine();
         Customer customer = Wallet.getCustomer(pin);
@@ -81,7 +73,7 @@ public class Wallet {
         displayAccountMenu(account);
     }
 
-    private static void openNewAccount() throws FileNotFoundException {
+    private static void openNewAccount() {
         System.out.print("Is this a new customer? (y/n): ");
         String choice = scan.nextLine();
 
@@ -110,7 +102,7 @@ public class Wallet {
 
         Customer.saveCustomers();
     }
-    static void displayAccountMenu(Account account) throws FileNotFoundException {
+    static void displayAccountMenu(Account account) {
         while (true) {
             System.out.println("\n--- Account Menu ---");
             System.out.println("1) Deposit");
@@ -133,7 +125,7 @@ public class Wallet {
                     Customer.saveCustomers();
                     break;
                 case 3:
-                    return; // Exit back to Main Menu
+                    return;
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
