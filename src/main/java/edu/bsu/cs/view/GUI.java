@@ -81,7 +81,7 @@ public class GUI extends Application {
         });
 
 
-        Label versionLabel = new Label("Version 0.3.4");
+        Label versionLabel = new Label("Version 0.3.0");
         versionLabel.setFont(Font.font("Arial", 12));
         versionLabel.setTextFill(Color.web("#7f8c8d"));
 
