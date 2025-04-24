@@ -37,10 +37,9 @@ public class GUI extends Application {
 
 
 
-    private final Color PRIMARYCOLOR = Color.web("#f67280");
-    private final Color SECONDARYCOLOR = Color.web("#c06c84");
-    private final Color TERTIARYCOLOR = Color.web("#6c5b78");
-    private final Color QUATERNARYCOLOR = Color.web("#f8b195");
+    private final Color PRIMARYCOLOR = Color.web("#ff006e");
+    private final Color SECONDARYCOLOR = Color.web("#fb5607");
+    private final Color TERTIARYCOLOR = Color.web("#8338ec");
     private final Color BACKGROUNDCOLOR = Color.web("#355c7d");
     private final Color TEXTCOLOR = Color.web("#fffff0");
     private final Color ACCENTCOLOR = Color.web("#9b59b6");
@@ -206,6 +205,7 @@ public class GUI extends Application {
         }
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     private Scene createConvertCurrencyScene() {
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(30, 30, 30, 30));
@@ -310,7 +310,7 @@ public class GUI extends Application {
 
         ObservableList<String> originalItems = FXCollections.observableArrayList(currencies);
 
-        comboBox.getEditor().textProperty().addListener((e, j, newValue) -> {
+        comboBox.getEditor().textProperty().addListener((_, _, newValue) -> {
             if (newValue == null || newValue.isEmpty()) {
                 comboBox.getItems().setAll(originalItems);
                 comboBox.show();
@@ -326,7 +326,7 @@ public class GUI extends Application {
 
         comboBox.setOnHidden(_ -> comboBox.getItems().setAll(originalItems));
 
-        comboBox.getEditor().textProperty().addListener((_, j, newValue) -> {
+        comboBox.getEditor().textProperty().addListener((_, _, newValue) -> {
             if (!newValue.toUpperCase().equals(newValue)) {
                 comboBox.getEditor().setText(newValue.toUpperCase());
             }
