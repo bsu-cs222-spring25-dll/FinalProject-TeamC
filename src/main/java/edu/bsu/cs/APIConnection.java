@@ -24,26 +24,16 @@ public class APIConnection extends JSONDataGetter{
 
     public static HttpsURLConnection encodedUrlString() throws IOException {
         APIKey = getAPIKey();
-        try {
-            APIUrl = new URL("https://api.exchangeratesapi.io/v1/latest?access_key=" + APIKey + "&format=1");
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
+        APIUrl = new URL("https://api.exchangeratesapi.io/v1/latest?access_key=" + APIKey + "&format=1");
 
-        try {
-            checkConnectionError(APIUrl);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        APIconnection = (HttpsURLConnection) APIUrl.openConnection();
 
-        try {
-            APIconnection = (HttpsURLConnection) APIUrl.openConnection();
+        if (APIconnection.getResponseCode() == 429) {
             check429Error(APIconnection);
-            return APIconnection;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new IOException("API rate limit exceeded");
         }
 
+        return APIconnection;
     }
 
     public static String getAPIKey() {
@@ -65,4 +55,5 @@ public class APIConnection extends JSONDataGetter{
         APIUsageMessage = errorReport.check429Status(responseCode);
         errorPrinter.print429Error(APIUsageMessage);
     }
+
 }

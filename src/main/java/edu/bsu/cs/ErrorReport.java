@@ -43,11 +43,6 @@ public class ErrorReport {
     }
 
     public String check429Status(int responseCode) {
-        if (responseCode == 429) {
-            return "Your API Key is full, please change the api key";
-        }
-        else {
-            return "";
-        }
+        return responseCode == 429 ? "API rate limit exceeded" : "";
     }
 }

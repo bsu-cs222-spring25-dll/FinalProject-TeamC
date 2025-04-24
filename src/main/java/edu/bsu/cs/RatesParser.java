@@ -1,36 +1,36 @@
 package edu.bsu.cs;
 
+import com.jayway.jsonpath.JsonPath;
 import net.minidev.json.JSONArray;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class RatesParser {
     CallForRates rateCall = new CallForRates();
     JSONToFloat jsonToFloat = new JSONToFloat();
     public List<Float> parseThroughRatesForCurrentExchangeRateList(String userInputCurrency, String userOutputCurrency) throws IOException {
-        JSONArray exchangeRateValueConvertingFrom = rateCall.getRateAsJSONArray(userInputCurrency);
-        JSONArray exchangeRateValueConvertingTo = rateCall.getRateAsJSONArray(userOutputCurrency);
-        Float startingRateFloat = jsonToFloat.jsonArrayToFloat(exchangeRateValueConvertingFrom);
-        Float endingRateFloat = jsonToFloat.jsonArrayToFloat(exchangeRateValueConvertingTo);
+        String allCurrentRates = rateCall.getStringDataNoData();
+        Map<String, Object> ratesMap = JsonPath.read(allCurrentRates, "$.rates");
 
         List<Float> rateList = new ArrayList<>();
-        rateList.add(startingRateFloat);
-        rateList.add(endingRateFloat);
+        rateList.add(((Number)ratesMap.get(userInputCurrency)).floatValue());
+        rateList.add(((Number)ratesMap.get(userOutputCurrency)).floatValue());
+
         return rateList;
     }
     public List<String> parseAvailableCurrencies(String ratesData) {
         List<String> currencies = new ArrayList<>();
 
-        String[] lines = ratesData.split("\n");
-        for (String line : lines) {
-            if (line.contains(":")) {
-                String currency = line.split(":")[0].trim();
-                currencies.add(currency);
-            }
+        try {
+            Map<String, Object> ratesMap = JsonPath.read(ratesData, "$.rates");
+            currencies.addAll(ratesMap.keySet());
+        } catch (Exception e) {
+            currencies = List.of("USD", "EUR", "GBP", "JPY", "CAD", "AUD", "CNY", "INR", "MXN");
         }
 
         return currencies;
     }
-}
+    }

@@ -5,6 +5,7 @@ import net.minidev.json.JSONArray;
 
 import java.io.IOException;
 import java.net.URLConnection;
+import java.util.Map;
 
 public class CallForRates {
     JSONDataGetter dataGetter = new JSONDataGetter();
@@ -15,18 +16,35 @@ public class CallForRates {
     }
     public String getRatesAndNames() throws IOException {
         String allCurrentRates = getStringDataNoData();
-        String rates = JsonPath.read(allCurrentRates, "$..rates").toString();
-        rates = rates.replace("{","");
-        rates = rates.replace("}","");
-        rates = rates.replace("[","");
-        rates = rates.replace("]","");
-        rates = rates.replace("\"","");
-        return rates.replace(",","\n");
+
+        try {
+            Map<String, Object> ratesMap = JsonPath.read(allCurrentRates, "$.rates");
+            String baseCurrency = JsonPath.read(allCurrentRates, "$.base");
+
+            StringBuilder formattedRates = new StringBuilder();
+            formattedRates.append("Base Currency: ").append(baseCurrency).append("\n\n");
+
+            ratesMap.entrySet().stream()
+                    .sorted(Map.Entry.comparingByKey())
+                    .forEach(entry -> {
+                        formattedRates.append(entry.getKey())
+                                .append(": ")
+                                .append(entry.getValue())
+                                .append("\n");
+                    });
+
+            return formattedRates.toString();
+
+        } catch (Exception e) {
+            return allCurrentRates;
+        }
     }
 
 
     public String getStringDataNoData() throws IOException {
         URLConnection connection = APIConnection.encodedUrlString();
-        return dataGetter.dataGetter(connection);
+        String response = dataGetter.dataGetter(connection);
+        System.out.println("Raw API Response: " + response);
+        return response;
     }
 }

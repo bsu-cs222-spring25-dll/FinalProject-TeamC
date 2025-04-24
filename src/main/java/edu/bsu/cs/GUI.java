@@ -1,5 +1,6 @@
 package edu.bsu.cs;
 
+import com.jayway.jsonpath.JsonPath;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,6 +24,7 @@ import javafx.scene.control.ToggleGroup;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GUI extends Application {
@@ -264,27 +266,31 @@ public class GUI extends Application {
             try {
                 String currencyFrom = fromComboBox.getValue();
                 String currencyTo = toComboBox.getValue();
-                float amount = Float.parseFloat(amountField.getText());
+                double amount = Double.parseDouble(amountField.getText());
 
-                if (currencyFrom == null || currencyFrom.isEmpty() ||
-                        currencyTo == null || currencyTo.isEmpty()) {
-                    showAlert("Please select or enter both currencies");
+                if (currencyFrom == null || currencyTo == null) {
+                    showAlert("Please select both currencies");
                     return;
                 }
 
-                List<Float> rateList = ratesParser.parseThroughRatesForCurrentExchangeRateList(
-                        currencyFrom.toUpperCase(), currencyTo.toUpperCase());
-                float startingAmountFloat = Float.parseFloat(String.valueOf(amount));
+                String ratesData = new CallForRates().getRatesAndNames();
+                Map<String, Object> ratesMap = JsonPath.read(ratesData, "$.rates");
+
+                double fromRate = ((Number)ratesMap.get(currencyFrom)).doubleValue();
+                double toRate = ((Number)ratesMap.get(currencyTo)).doubleValue();
+
+                double convertedAmount = amount * (toRate / fromRate);
                 decimalFormat.setMaximumFractionDigits(2);
 
-                String result = "Converting " + decimalFormat.format(startingAmountFloat) + " " + currencyFrom +
-                        " to " + currencyTo + ":\n\n" +
-                        "Result: " + decimalFormat.format(converter.convertUsingAmount(rateList, startingAmountFloat)) +
-                        " " + currencyTo;
+                resultLabel.setText(String.format(
+                        "%.2f %s = %.2f %s",
+                        amount, currencyFrom,
+                        convertedAmount, currencyTo
+                ));
 
-                resultLabel.setText(result);
             } catch (Exception ex) {
-                showAlert("Invalid input. Please check your values and try again.");
+                showAlert("Conversion failed: " + ex.getMessage());
+                ex.printStackTrace();
             }
         });
 
