@@ -1,4 +1,6 @@
-package edu.bsu.cs;
+package edu.bsu.cs.model;
+
+import edu.bsu.cs.utility.JSONparser;
 
 import java.io.IOException;
 import java.io.InputStream;

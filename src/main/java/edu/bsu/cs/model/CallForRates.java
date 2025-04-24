@@ -1,6 +1,7 @@
-package edu.bsu.cs;
+package edu.bsu.cs.model;
 
 import com.jayway.jsonpath.JsonPath;
+import edu.bsu.cs.utility.JSONDataGetter;
 import net.minidev.json.JSONArray;
 
 import java.io.IOException;

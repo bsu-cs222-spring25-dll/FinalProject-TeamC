@@ -1,4 +1,6 @@
-package edu.bsu.cs;
+package edu.bsu.cs.view;
+import edu.bsu.cs.view.ConsoleMenu;
+
 import java.io.FileNotFoundException;
 
 public class ConsoleMain {

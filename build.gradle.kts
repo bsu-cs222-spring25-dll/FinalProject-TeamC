@@ -26,7 +26,7 @@ javafx {
 }
 
 application {
-    mainClass.set("edu.bsu.cs.GUI") // Fully qualified name
+    mainClass.set("edu.bsu.cs.view.GUI") // Fully qualified name
 }
 javafx {
     version = "23.0.2"

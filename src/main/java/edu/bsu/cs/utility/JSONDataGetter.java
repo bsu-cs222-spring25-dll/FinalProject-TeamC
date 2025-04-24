@@ -1,4 +1,4 @@
-package edu.bsu.cs;
+package edu.bsu.cs.utility;
 
 import java.io.IOException;
 import java.net.URLConnection;

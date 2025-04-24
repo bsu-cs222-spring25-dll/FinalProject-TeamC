@@ -1,5 +1,8 @@
 package edu.bsu.cs;
 
+import edu.bsu.cs.model.Account;
+import edu.bsu.cs.model.Customer;
+import edu.bsu.cs.model.Wallet;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

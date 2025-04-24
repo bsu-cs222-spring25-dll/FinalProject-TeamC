@@ -1,6 +1,7 @@
-package edu.bsu.cs;
+package edu.bsu.cs.view;
 
 import com.jayway.jsonpath.JsonPath;
+import edu.bsu.cs.model.*;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -84,7 +85,7 @@ public class GUI extends Application {
         });
 
 
-        Label versionLabel = new Label("Version 0.3.1");
+        Label versionLabel = new Label("Version 0.3.3");
         versionLabel.setFont(Font.font("Arial", 12));
         versionLabel.setTextFill(Color.web("#7f8c8d"));
 

@@ -1,14 +1,16 @@
-package edu.bsu.cs;
+package edu.bsu.cs.model;
+
+import edu.bsu.cs.utility.ErrorPrinter;
+import edu.bsu.cs.utility.JSONDataGetter;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Properties;
 
 @SuppressWarnings("ALL")
-public class APIConnection extends JSONDataGetter{
+public class APIConnection extends JSONDataGetter {
     @Deprecated
     static Properties properties = new Properties();
     static ErrorReport errorReport = new ErrorReport();

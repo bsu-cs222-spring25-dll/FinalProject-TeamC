@@ -1,4 +1,4 @@
-import edu.bsu.cs.APIConnection;
+import edu.bsu.cs.model.APIConnection;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

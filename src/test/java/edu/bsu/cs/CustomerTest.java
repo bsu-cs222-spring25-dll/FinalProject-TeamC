@@ -1,6 +1,7 @@
 package edu.bsu.cs;
 
-import org.junit.jupiter.api.Assertions;
+import edu.bsu.cs.model.Account;
+import edu.bsu.cs.model.Customer;
 import org.junit.jupiter.api.Test;
 
 public class CustomerTest {

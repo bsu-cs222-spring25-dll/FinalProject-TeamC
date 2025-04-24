@@ -1,4 +1,6 @@
-package edu.bsu.cs;
+package edu.bsu.cs.view;
+
+import edu.bsu.cs.model.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

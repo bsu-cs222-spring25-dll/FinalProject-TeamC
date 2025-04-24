@@ -1,4 +1,4 @@
-package edu.bsu.cs;
+package edu.bsu.cs.utility;
 
 import net.minidev.json.JSONArray;
 

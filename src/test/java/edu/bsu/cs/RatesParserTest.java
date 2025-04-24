@@ -1,5 +1,6 @@
 package edu.bsu.cs;
 
+import edu.bsu.cs.model.RatesParser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

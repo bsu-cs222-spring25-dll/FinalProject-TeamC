@@ -1,4 +1,4 @@
-package edu.bsu.cs;
+package edu.bsu.cs.utility;
 
 public class ErrorPrinter {
     public void printConnectionMessageError(String connectionMessage) {
