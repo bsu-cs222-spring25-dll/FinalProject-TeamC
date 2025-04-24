@@ -6,11 +6,15 @@ import org.junit.jupiter.api.Test;
 public class WalletTest {
     @Test
     public void walletCustomerCreationTest() {
-        Customer testCustomer1 = new Customer("test", "test", "1234");
-        Customer testCustomer2 = new Customer("hi", "ji", "1234");
+        Customer testCustomer1 = new Customer("test", "test", "2348");
+        Customer testCustomer2 = new Customer("hi", "ji", "7865");
         Wallet.addCustomer(testCustomer1);
         Wallet.addCustomer(testCustomer2);
 
-        Assertions.assertEquals(2, Wallet.getSizeOfCustomerList());
+        Customer result1 = Wallet.getCustomer("2348");
+        Customer result2 = Wallet.getCustomer("7865");
+
+        Assertions.assertEquals(testCustomer1,result1);
+        Assertions.assertEquals(testCustomer2, result2);
     }
 }
