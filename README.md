@@ -7,14 +7,17 @@ This program was created to assist those who need information on global currency
 
 2.) Converts from one currency to any other currency
 
+3.) Create a wallet to manage your own currency and money
+
 # Installation & Setup
 # clone the repo
 https://github.com/bsu-cs222-spring25-dll/FinalProject-TeamC.git
 
 ## Add API Key to project
-Secured file 
+Add API Key to config.properties 
 
 ## Run the Project
+Add API Key to config.properties and run through Gradle
 JavaFX: Using gradle, run GUI.java
 
 Java: ConsoleMain.java

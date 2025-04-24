@@ -122,13 +122,11 @@ public class GUI extends Application {
         Button displayRatesBtn = createStyledButton("Display Exchange Rates", PRIMARYCOLOR);
         Button convertCurrencyBtn = createStyledButton("Convert Currency", SECONDARYCOLOR);
         Button walletBtn = createStyledButton("Wallet", TERTIARYCOLOR);
-        Button marketHistoryBtn = createStyledButton("Market History", QUATERNARYCOLOR);
         Button quitBtn = createStyledButton("Quit", Color.web("#95a5a6"));
 
         displayRatesBtn.setOnAction(_ -> window.setScene(createDisplayRatesScene()));
         convertCurrencyBtn.setOnAction(_ -> window.setScene(createConvertCurrencyScene()));
         walletBtn.setOnAction(_ -> window.setScene(createWalletScene()));
-        marketHistoryBtn.setOnAction(_ -> window.setScene(createMarketHistoryScene()));
         quitBtn.setOnAction(_ -> window.close());
 
         VBox mainMenuLayout = new VBox(30);
@@ -139,7 +137,6 @@ public class GUI extends Application {
                 displayRatesBtn,
                 convertCurrencyBtn,
                 walletBtn,
-                marketHistoryBtn,
                 quitBtn);
 
         return new Scene(mainMenuLayout, 700, 650);
@@ -342,7 +339,7 @@ public class GUI extends Application {
 
     private TextField createStyledTextField() {
         TextField textField = new TextField();
-        textField.setPromptText("e.g. 100.00");
+        textField.setPromptText(" ");
         textField.setStyle("-fx-padding: 8; -fx-font-size: 14; -fx-background-radius: 5;");
         textField.setMaxWidth(200);
         return textField;
@@ -712,10 +709,6 @@ public class GUI extends Application {
         dialog.showAndWait();
 
         window.setScene(createManageAccountScene(customer, account));
-    }
-
-    private Scene createMarketHistoryScene() {
-        return null;
     }
 
     public static void main(String[] args) {
