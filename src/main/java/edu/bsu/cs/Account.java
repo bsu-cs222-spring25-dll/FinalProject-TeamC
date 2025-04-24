@@ -11,6 +11,7 @@ public class Account {
         this.balance = initialDeposit;
         this.accountCurrencyType = accountCurrencyType;
         this.accountNumber = "" + numOfAccounts;
+        this.pin = pin;
         numOfAccounts++;
     }
 

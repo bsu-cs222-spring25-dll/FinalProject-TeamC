@@ -7,7 +7,7 @@ public class Customer {
     private String firstName;
     private String lastName;
     private String pin;
-    private final ArrayList<Account> accountList;
+    private static ArrayList<Account> accountList = null;
 
 
     public Customer(String firstName, String lastName, String pin) {
@@ -99,15 +99,9 @@ public class Customer {
 
     public static void saveAccounts(ArrayList<Customer> customers) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("SavedAccounts.txt"))){
-            for (Customer current : customers) {
-                current.getAllAccounts(current);
-                String pin = current.getPin();
-                for (Account list : current.getAccountList()) {
-                    if (pin.equals(list.getAccountPin())) {
-                        writer.newLine();
-                        writer.write(String.join(",", list.getAccountPin(), Double.toString(list.getBalance()), list.getAccountCurrencyType()));
-                    }
-                }
+            for(Account line : accountList){
+                writer.write(String.join(",",line.getAccountPin(),Double.toString(line.getBalance()),line.getAccountCurrencyType()));
+                writer.newLine();
             }
         } catch (IOException e) {
             System.out.println("ERROR saving customer accounts");
@@ -153,4 +147,5 @@ public class Customer {
     public ArrayList<Account> getAccountList() {
         return accountList;
     }
+
 }
