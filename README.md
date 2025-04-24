@@ -14,11 +14,14 @@ This program was created to assist those who need information on global currency
 https://github.com/bsu-cs222-spring25-dll/FinalProject-TeamC.git
 
 ## Add API Key to project
-Add API Key to config.properties 
+Create a file in the resource folder called "config.properties" 
+In the empty file, type "apiKey =" 
+Add API Key after the equal sign 
+(API key is located in the team management document) 
 
 ## Run the Project
 Add API Key to config.properties and run through Gradle
-JavaFX: Using gradle, run GUI.java
+JavaFX: Run through Gradle. Application -> Test -> Run
 
 Java: ConsoleMain.java
 
