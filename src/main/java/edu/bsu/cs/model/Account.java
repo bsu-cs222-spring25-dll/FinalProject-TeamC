@@ -2,10 +2,10 @@ package edu.bsu.cs.model;
 
 public class Account {
     private double balance ;
-    private String accountCurrencyType;
-    private String accountNumber;
+    private final String accountCurrencyType;
+    private final String accountNumber;
     private static int numOfAccounts = 1000;
-    private String pin;
+    private final String pin;
 
     public Account(double initialDeposit, String accountCurrencyType, String pin) {
         this.balance = initialDeposit;
@@ -55,9 +55,6 @@ public class Account {
         return accountCurrencyType;
     }
 
-    public void setAccountCurrencyType(Object accountCurrencyType) {
-        this.accountCurrencyType = accountCurrencyType.toString();
-    }
     public String getAccountPin(){
         return pin;
     }

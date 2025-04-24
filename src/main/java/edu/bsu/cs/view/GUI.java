@@ -33,11 +33,7 @@ public class GUI extends Application {
 
     private Stage window;
     private Scene mainMenu;
-    private final RatesParser ratesParser = new RatesParser();
     private final DecimalFormat decimalFormat = new DecimalFormat();
-    private final CurrencyConverter converter = new CurrencyConverter();
-
-
 
     private final Color PRIMARYCOLOR = Color.web("#ff006e");
     private final Color SECONDARYCOLOR = Color.web("#fb5607");
@@ -85,7 +81,7 @@ public class GUI extends Application {
         });
 
 
-        Label versionLabel = new Label("Version 0.3.3");
+        Label versionLabel = new Label("Version 0.3.4");
         versionLabel.setFont(Font.font("Arial", 12));
         versionLabel.setTextFill(Color.web("#7f8c8d"));
 
@@ -466,7 +462,7 @@ public class GUI extends Application {
                 String selected = accountsList.getSelectionModel().getSelectedItem();
                 if (selected != null) {
                     String accountNumber = selected.split(" - ")[0].replace("Account #", "");
-                    Account account = customer.getAccount(accountNumber, customer);
+                    Account account = customer.getAccount(accountNumber);
                     if (account != null) {
                         window.setScene(createManageAccountScene(customer, account));
                     }

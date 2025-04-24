@@ -21,7 +21,6 @@ public class Wallet {
         return null;
     }
 
-    public static int getSizeOfCustomerList() {return customerArrayList.size();}
     public static ArrayList<Customer> getCustomerArrayList(){return customerArrayList;}
 
     public static void accessWallet() {
@@ -61,10 +60,10 @@ public class Wallet {
         System.out.println("WELCOME: " + customer.getFirstName() + " " + customer.getLastName());
 
         System.out.println("Your Accounts: ");
-        System.out.println(customer.getAllAccounts(customer));
+        System.out.println(customer.getAllAccounts());
         System.out.print("Enter the account number you want to access: ");
         String accountNumber = scan.nextLine();
-        Account account = customer.getAccount(accountNumber, customer);
+        Account account = customer.getAccount(accountNumber);
 
         if (account == null) {
             System.out.println("Account number invalid.");

@@ -48,7 +48,7 @@ public class APIConnection extends JSONDataGetter {
     }
 
     public static void checkConnectionError(URL url) throws IOException {
-        connectionStatusMessage = errorReport.chechkConnectionStatus(url);
+        connectionStatusMessage = errorReport.checkConnectionStatus(url);
         errorPrinter.printConnectionMessageError(connectionStatusMessage);
     }
 

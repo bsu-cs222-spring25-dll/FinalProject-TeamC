@@ -14,7 +14,7 @@ class ConsoleMenu {
     private final CallForRates ratesCaller = new CallForRates();
     Scanner scan = new Scanner(System.in);
 
-    public void runMenu() throws FileNotFoundException {
+    public void runMenu() {
         Customer.loadCustomers();
         System.out.println("""
                 ***Welcome***

@@ -4,9 +4,9 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Customer {
-    private String firstName;
-    private String lastName;
-    private String pin;
+    private final String firstName;
+    private final String lastName;
+    private final String pin;
     private static ArrayList<Account> accountList = null;
 
 
@@ -14,7 +14,7 @@ public class Customer {
         this.firstName = firstName;
         this.lastName = lastName;
         this.pin = pin;
-        this.accountList = new ArrayList<>();
+        accountList = new ArrayList<>();
     }
 
 
@@ -23,7 +23,7 @@ public class Customer {
     }
 
 
-    public Account getAccount(String accountNumber, Customer customer) {
+    public Account getAccount(String accountNumber) {
         for (Account account : accountList) {
             if (account.getAccountNumber().equals(accountNumber)) {
                 return account;
@@ -33,7 +33,7 @@ public class Customer {
     }
 
 
-    public String getAllAccounts(Customer customer) {
+    public String getAllAccounts() {
         if (accountList.isEmpty()) {
             return "No accounts found";
         }
@@ -90,14 +90,14 @@ public class Customer {
                 writer.newLine();
             }
 
-            saveAccounts(customers);
+            saveAccounts();
 
         } catch (IOException e) {
             System.out.println("ERROR Saving customer");
         }
     }
 
-    public static void saveAccounts(ArrayList<Customer> customers) throws IOException {
+    public static void saveAccounts() throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("SavedAccounts.txt"))){
             for(Account line : accountList){
                 writer.write(String.join(",",line.getAccountPin(),Double.toString(line.getBalance()),line.getAccountCurrencyType()));
@@ -121,29 +121,14 @@ public class Customer {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
 
     public String getPin() {
         return pin;
     }
-
-    public void setPin(String pin) {
-        this.pin = pin;
-    }
-    public boolean matchPin(String pin) {
-        return pin.equals(this.pin);
-    }
-
     public ArrayList<Account> getAccountList() {
         return accountList;
     }

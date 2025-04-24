@@ -27,12 +27,10 @@ public class CallForRates {
 
             ratesMap.entrySet().stream()
                     .sorted(Map.Entry.comparingByKey())
-                    .forEach(entry -> {
-                        formattedRates.append(entry.getKey())
-                                .append(": ")
-                                .append(entry.getValue())
-                                .append("\n");
-                    });
+                    .forEach(entry -> formattedRates.append(entry.getKey())
+                            .append(": ")
+                            .append(entry.getValue())
+                            .append("\n"));
 
             return formattedRates.toString();
 
