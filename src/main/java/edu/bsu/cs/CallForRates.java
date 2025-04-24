@@ -36,7 +36,12 @@ public class CallForRates {
             return formattedRates.toString();
 
         } catch (Exception e) {
-            return allCurrentRates;
+            try {
+                Map<String, Object> ratesMap = JsonPath.read(allCurrentRates, "$.rates");
+                return allCurrentRates;
+            } catch (Exception ex) {
+                throw new IOException("Invalid JSON response from API");
+            }
         }
     }
 
@@ -44,7 +49,12 @@ public class CallForRates {
     public String getStringDataNoData() throws IOException {
         URLConnection connection = APIConnection.encodedUrlString();
         String response = dataGetter.dataGetter(connection);
-        System.out.println("Raw API Response: " + response);
-        return response;
+
+        try {
+            Object parsed = JsonPath.parse(response).json();
+            return response;
+        } catch (Exception e) {
+            throw new IOException("Invalid JSON response from API");
+        }
     }
 }

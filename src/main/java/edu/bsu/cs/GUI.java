@@ -23,6 +23,7 @@ import javafx.scene.control.ToggleGroup;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -220,13 +221,15 @@ public class GUI extends Application {
         GridPane.setConstraints(titleLabel, 0, 0, 2, 1);
         GridPane.setMargin(titleLabel, new Insets(0, 0, 20, 0));
 
-        List<String> currencyList;
+        List<String> currencyList = new ArrayList<>(List.of("USD", "EUR", "GBP", "JPY", "CAD", "AUD", "CNY", "INR", "MXN"));
+
         try {
             CallForRates call = new CallForRates();
-            String data = call.getRatesAndNames();
-            currencyList = ratesParser.parseAvailableCurrencies(data);
+            String data = call.getStringDataNoData(); // Get raw JSON data
+            Map<String, Object> ratesMap = JsonPath.read(data, "$.rates");
+            currencyList = new ArrayList<>(ratesMap.keySet());
+            currencyList.sort(String::compareTo);
         } catch (IOException e) {
-            currencyList = List.of("USD", "EUR", "GBP", "JPY", "CAD", "AUD", "CNY", "INR", "MXN");
             showAlert("Couldn't fetch latest currencies, using default list");
         }
 
@@ -267,14 +270,18 @@ public class GUI extends Application {
                 String currencyFrom = fromComboBox.getValue();
                 String currencyTo = toComboBox.getValue();
                 double amount = Double.parseDouble(amountField.getText());
-
                 if (currencyFrom == null || currencyTo == null) {
                     showAlert("Please select both currencies");
                     return;
                 }
 
-                String ratesData = new CallForRates().getRatesAndNames();
+                String ratesData = new CallForRates().getStringDataNoData();
                 Map<String, Object> ratesMap = JsonPath.read(ratesData, "$.rates");
+
+                if (!ratesMap.containsKey(currencyFrom) || !ratesMap.containsKey(currencyTo)) {
+                    showAlert("One or both selected currencies are not available");
+                    return;
+                }
 
                 double fromRate = ((Number)ratesMap.get(currencyFrom)).doubleValue();
                 double toRate = ((Number)ratesMap.get(currencyTo)).doubleValue();

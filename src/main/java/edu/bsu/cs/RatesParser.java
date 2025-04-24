@@ -33,4 +33,4 @@ public class RatesParser {
 
         return currencies;
     }
-    }
+}
