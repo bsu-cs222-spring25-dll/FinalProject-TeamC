@@ -2,7 +2,6 @@ package edu.bsu.cs.view;
 
 import edu.bsu.cs.model.*;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.List;
